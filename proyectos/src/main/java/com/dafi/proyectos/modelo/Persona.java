@@ -34,9 +34,6 @@ public class Persona implements Serializable {
 		this.fechaRegistro = fechaRegistro;
 	}
 
-
-
-
 	@Column(name = "NOMBRE", nullable = false,length = 150)
     private String nombre;
         
@@ -98,15 +95,7 @@ public class Persona implements Serializable {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	}
-
-
-
-
-
-    
-    
-    
+	}    
 
 
 }
