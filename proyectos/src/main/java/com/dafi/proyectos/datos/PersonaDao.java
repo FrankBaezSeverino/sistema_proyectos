@@ -10,7 +10,7 @@ public interface PersonaDao {
     
     public Persona findPersonaById(Persona persona);
     
-    public Persona findPersonaByEmail(Persona persona);
+    public Persona findPersonaByCorreo(Persona persona);
     
     public void insertPersona(Persona persona);
     
