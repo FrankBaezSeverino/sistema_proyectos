@@ -16,6 +16,8 @@ public class PersonaDaoImpl implements PersonaDao {
     @Override
 	public List<Persona> findAllPersonas() {
 		return em.createNamedQuery("Persona.findAll").getResultList();
+		
+		//probando git
 	}
 
 	@Override
