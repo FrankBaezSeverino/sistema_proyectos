@@ -11,19 +11,4 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-    <servlet>
-        <servlet-name>JerseyWebApplication</servlet-name>
-        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>mx.com.gm.sga.servicio</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>JerseyWebApplication</servlet-name>
-        <url-pattern>/webservice/*</url-pattern>
-    </servlet-mapping>
-        
-    
 </web-app>
