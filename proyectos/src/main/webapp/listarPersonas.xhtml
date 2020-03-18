@@ -46,24 +46,14 @@
                     </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="Apellido">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{persona.apellido}" />
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{persona.apellido}" />
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
 
-                <p:column headerText="Email">
+                <p:column headerText="Correo">
                     <p:cellEditor>
                         <f:facet name="output">
-                            <h:outputText value="#{persona.email}" />
+                            <h:outputText value="#{persona.correo}" />
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText value="#{persona.email}" />
+                            <p:inputText value="#{persona.correo}" />
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -108,12 +98,9 @@
                     <p:panelGrid id="display" columns="4" columnClasses="label, value" >
                         <h:outputText value="Nombre" />
                         <h:inputText value="#{personaBean.personaSeleccionada.nombre}" />
-                        
-                        <h:outputText value="Apellido" />
-                        <h:inputText value="#{personaBean.personaSeleccionada.apellido}" />
-                        
-                        <h:outputText value="Email" />
-                        <h:inputText value="#{personaBean.personaSeleccionada.email}" />
+                      
+                        <h:outputText value="Correo" />
+                        <h:inputText value="#{personaBean.personaSeleccionada.correo}" />
                         
                         <h:outputText value="Telefono" />
                         <h:inputText value="#{personaBean.personaSeleccionada.telefono}" />

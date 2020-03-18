@@ -41,7 +41,10 @@ public class ImpedimentoProyecto implements Serializable {
     @Enumerated(EnumType.ORDINAL)
 	private PrioridadImpedimento prioridad;
 	
-	@Column(name = "ID_PERSONA_REPORTE", nullable = false)
+	
+	@ManyToOne
+	@JoinColumn(name="ID_PERSONA_REPORTE")
+	//@Column(name = "ID_PERSONA_REPORTE", nullable = false)
 	private Persona reportadoPor;
 	
 	@Column(name = "ID_ESTADO", nullable = false)
@@ -49,8 +52,8 @@ public class ImpedimentoProyecto implements Serializable {
 	private EstadoImpedimiento estado;
 	
 	@ManyToOne
-	@JoinColumn(name = "FK_PROYECTO", nullable = false, updatable = false)
-    @Column(name = "ID_PROYECTO", nullable = false)
+	@JoinColumn(name = "ID_PROYECTO", nullable = false, updatable = false)
+    //@Column(name = "ID_PROYECTO", nullable = false)
 	private Proyecto proyecto;
 	
 	public ImpedimentoProyecto() {

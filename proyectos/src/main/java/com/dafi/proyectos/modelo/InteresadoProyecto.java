@@ -30,14 +30,7 @@ public class InteresadoProyecto implements Serializable {
 	@Column(name = "FECHA_REGISTRO", nullable = false)
 	private LocalDate fechaRegistro;
 	
-	public LocalDate getFechaRegistro() {
-		return fechaRegistro;
-	}
 
-
-	public void setFechaRegistro(LocalDate fechaRegistro) {
-		this.fechaRegistro = fechaRegistro;
-	}
 
 
 	@Column(name = "EMPRESA_DEPARTAMENTO", nullable = false,length = 150)
@@ -46,7 +39,9 @@ public class InteresadoProyecto implements Serializable {
 	@Column(name = "EXPECTATIVAS", nullable = false,length = 1000)
 	private String expectativas;
 	
-	@Column(name = "ID_PERSONA_INTERESADO", nullable = false)
+	@ManyToOne
+	@JoinColumn(name="ID_PERSONA_INTERESADO")
+	//@Column(name = "ID_PERSONA_INTERESADO", nullable = false)
 	private Persona interesado;
 	
 	@Column(name = "ID_ROL", nullable = false)
@@ -67,8 +62,8 @@ public class InteresadoProyecto implements Serializable {
     
 	
    @ManyToOne
-   @JoinColumn(name = "FK_PROYECTO", nullable = false, updatable = false)
-   @Column(name = "ID_PROYECTO", nullable = false)
+   @JoinColumn(name = "ID_PROYECTO", nullable = false, updatable = false)
+   //@Column(name = "ID_PROYECTO", nullable = false)
    private Proyecto proyecto;
 	
 
@@ -165,6 +160,15 @@ public class InteresadoProyecto implements Serializable {
 
 	public void setProyecto(Proyecto proyecto) {
 		this.proyecto = proyecto;
+	}
+	
+	public LocalDate getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+
+	public void setFechaRegistro(LocalDate fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
 	}
 
 }

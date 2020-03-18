@@ -48,10 +48,13 @@ public class RiesgoProyecto implements Serializable {
 	@Transient
 	private double puntuacion; 
 	
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "ID_ESTADO", nullable = false)
 	private EstadoRiesgo estado;
 	
-	@Column(name = "ID_PERSONA_ASIGNADA", nullable = false)
+	@ManyToOne
+	@JoinColumn(name="ID_PERSONA_ASIGNADA")
+//	@Column(name = "ID_PERSONA_ASIGNADA", nullable = false)
 	private Persona asignadoA;
 	
 	@Column(name = "ESTRATEGIA_RESPUESTA", nullable = true,length = 1000)
@@ -61,8 +64,8 @@ public class RiesgoProyecto implements Serializable {
 	private LocalDate fechaRegistro;
 	
    @ManyToOne
-   @JoinColumn(name = "FK_PROYECTO", nullable = false, updatable = false)
-   @Column(name = "ID_PROYECTO", nullable = false)
+   @JoinColumn(name = "ID_PROYECTO", nullable = false, updatable = false)
+  // @Column(name = "ID_PROYECTO", nullable = false)
    private Proyecto proyecto;
 	
    

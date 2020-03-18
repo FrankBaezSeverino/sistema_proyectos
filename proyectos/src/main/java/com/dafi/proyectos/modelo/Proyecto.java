@@ -84,7 +84,9 @@ public class Proyecto implements Serializable {
 	@Column(name = "ANEXO_ESPECIFICACION_TECNICA")
 	private byte[] anexoEspecificacionTecnica;
 
-	@Column(name = "ID_PERSONA_LIDER", nullable = false)
+	@ManyToOne
+	@JoinColumn(name="ID_PERSONA_LIDER")
+	//@Column(name = "ID_PERSONA_LIDER", nullable = false)
 	private Persona lider;
 	
 		

@@ -26,14 +26,7 @@ public class Persona implements Serializable {
 	@Column(name = "FECHA_REGISTRO", nullable = false)
 	private LocalDate fechaRegistro;
 	
-	public LocalDate getFechaRegistro() {
-		return fechaRegistro;
-	}
-
-	public void setFechaRegistro(LocalDate fechaRegistro) {
-		this.fechaRegistro = fechaRegistro;
-	}
-
+	
 	@Column(name = "NOMBRE", nullable = false,length = 150)
     private String nombre;
         
@@ -42,6 +35,16 @@ public class Persona implements Serializable {
         
     @Column(name = "TELEFONO", nullable = true,length = 30)
     private String telefono;
+    
+	public LocalDate getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(LocalDate fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+
 	
 	public Persona() {
 		super();

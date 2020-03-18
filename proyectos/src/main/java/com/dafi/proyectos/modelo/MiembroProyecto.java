@@ -26,6 +26,28 @@ public class MiembroProyecto implements Serializable {
 	
 	@Column(name = "FECHA_REGISTRO", nullable = false)
 	private LocalDate fechaRegistro;
+
+	@ManyToOne
+	@JoinColumn(name="ID_PERSONA_MIEMBRO")
+//	@Column(name = "ID_PERSONA_MIEMBRO", nullable = false)
+	private Persona miembro;
+	
+	@Column(name = "ACTIVO", nullable = false)
+	private boolean activo;
+	
+	@Column(name = "ID_ROL", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+	private Rol rol;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_PROYECTO", nullable = false, updatable = false)
+    //@Column(name = "ID_PROYECTO", nullable = false)
+	private Proyecto proyecto;
+	
+
+	public MiembroProyecto() {
+		super();
+	}
 	
 	public LocalDate getFechaRegistro() {
 		return fechaRegistro;
@@ -37,25 +59,7 @@ public class MiembroProyecto implements Serializable {
 		this.fechaRegistro = fechaRegistro;
 	}
 
-
-
-	@Column(name = "ID_PERSONA_MIEMBRO", nullable = false)
-	private Persona miembro;
 	
-	@Column(name = "ACTIVO", nullable = false)
-	private boolean activo;
-	
-	@Column(name = "ID_ROL", nullable = false)
-    @Enumerated(EnumType.ORDINAL)
-	private Rol rol;
-	
-	@ManyToOne
-	@JoinColumn(name = "FK_PROYECTO", nullable = false, updatable = false)
-    @Column(name = "ID_PROYECTO", nullable = false)
-	private Proyecto proyecto;
-		
-	
-
 	public Integer getIdMiembroProyecto() {
 		return idMiembroProyecto;
 	}
@@ -116,8 +120,5 @@ public class MiembroProyecto implements Serializable {
 
 
 
-	public MiembroProyecto() {
-		super();
-	}
    
 }

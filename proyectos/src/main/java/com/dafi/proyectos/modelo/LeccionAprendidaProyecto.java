@@ -46,8 +46,8 @@ public class LeccionAprendidaProyecto implements Serializable {
 	
 		
 	@ManyToOne
-	@JoinColumn(name = "FK_PROYECTO", nullable = false, updatable = false)
-	@Column(name = "ID_PROYECTO", nullable = false)
+	@JoinColumn(name = "ID_PROYECTO", nullable = false, updatable = false)
+//	@Column(name = "ID_PROYECTO", nullable = false)
 	private Proyecto proyecto;
 	
 	

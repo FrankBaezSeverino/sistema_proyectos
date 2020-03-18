@@ -17,13 +17,6 @@ import com.dafi.proyectos.enumeracion.OrigenSolicitudCambio;
 @Table(name = "PROYECTO_SOLICITUD_CAMBIO")
 public class SolicitudCambioProyecto implements Serializable {
 
-	
-
-
-
-
-
-
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -52,8 +45,9 @@ public class SolicitudCambioProyecto implements Serializable {
 	@Column(name = "IMPACTO", nullable = false,length = 500)
 	private String impacto;
 
-	
-	@Column(name = "ID_PERSONA_SOLICITUD", nullable = false)
+	@ManyToOne
+	@JoinColumn(name="ID_PERSONA_SOLICITUD")
+	//@Column(name = "ID_PERSONA_SOLICITUD", nullable = false)
 	private Persona solicitadoPor;
 	
 	@Column(name = "ID_CATEGORIA_SOLICITUD_CAMBIO", nullable = false)
@@ -70,8 +64,8 @@ public class SolicitudCambioProyecto implements Serializable {
 
 	
    @ManyToOne
-   @JoinColumn(name = "FK_PROYECTO", nullable = false, updatable = false)
-   @Column(name = "ID_PROYECTO", nullable = false)
+   @JoinColumn(name = "ID_PROYECTO", nullable = false, updatable = false)
+   //@Column(name = "ID_PROYECTO", nullable = false)
    private Proyecto proyecto;
 
 	
