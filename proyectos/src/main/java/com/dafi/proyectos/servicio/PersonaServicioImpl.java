@@ -1,5 +1,6 @@
 package com.dafi.proyectos.servicio;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -36,6 +37,7 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 
 	@Override
 	public void registrarPersona(Persona persona) {
+		persona.setFechaRegistro(LocalDate.now());
 	    personaDao.insertPersona(persona);
 
 	}
