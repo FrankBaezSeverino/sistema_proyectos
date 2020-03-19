@@ -39,18 +39,11 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 	public void registrarPersona(Persona persona) {
 		persona.setFechaRegistro(LocalDate.now());
 	    personaDao.insertPersona(persona);
-
 	}
 
 	@Override
 	public void modificarPersona(Persona persona) {
-        try {
-            personaDao.updatePersona(persona);
-        } catch (Throwable t) {
-            contexto.setRollbackOnly();
-            t.printStackTrace(System.out);
-        }
-
+         personaDao.updatePersona(persona);
 	}
 
 	@Override
