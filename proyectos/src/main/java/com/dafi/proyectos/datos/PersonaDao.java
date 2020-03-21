@@ -8,7 +8,7 @@ public interface PersonaDao {
     
 	public List<Persona> findAllPersonas();
     
-    public Persona findPersonaById(Persona persona);
+    public Persona findPersonaById(Integer idPersona);
     
     public Persona findPersonaByCorreo(Persona persona);
     

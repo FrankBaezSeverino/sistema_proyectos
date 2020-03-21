@@ -11,7 +11,7 @@ public interface PersonaServicioRemoto {
 
 	  public List<Persona> listarPersonas();
 	    
-	    public Persona encontrarPersonaPorId(Persona persona);
+	    public Persona encontrarPersonaPorId(Integer idPersona);
 	    
 	    public Persona encontrarPersonaPorCorreo(Persona persona);
 	    

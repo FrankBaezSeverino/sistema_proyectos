@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Registro de Persona</title>
+        <f:metadata>
+            <f:viewParam name="id"
+                         value="#{personaBean.id}"
+                         converter="javax.faces.Integer"/>
+            <f:viewAction action="#{personaBean.detallePersona()}"/>
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <h1>Datos Personas</h1>
+        <h:form>
+            <p:growl id="messages" showDetail="true" />
+            <p:messages/>
+        
+          	<h:inputHidden id="idPersona" value="#{personaBean.persona.idPersona}"/>  
+              <p:outputPanel id="personaDetail" style="text-align: center">
+                    <p:panelGrid id="display" columns="4" columnClasses="label, value" >
+           	
+            			
+            			<h:outputLabel for="nombre" value="Name"/>
+            			<h:inputText id="nombre" value="#{personaBean.persona.nombre}"/>                
+            			
+            			<h:outputLabel for="correo" value="Correo"/>
+            			<h:inputText id="correo" value="#{personaBean.persona.correo}"/>
+            			
+            			<h:outputLabel for="telefono" value="Telefono"/>
+            			<h:inputText id="telefono" value="#{personaBean.persona.telefono}"/>
+						
+						<f:facet name="footer" >
+            				<p:commandButton value="Cancelar" action="#{personaBean.cancelar()}"/>
+            
+            				<p:commandButton value="Grabar" action="#{personaBean.grabarPersona()}"/>
+            			</f:facet>
+                   	</p:panelGrid>
+          	</p:outputPanel>
+        </h:form>
+    </h:body>
+</html>

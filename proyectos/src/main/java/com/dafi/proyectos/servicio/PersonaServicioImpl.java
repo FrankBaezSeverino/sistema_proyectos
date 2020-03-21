@@ -26,8 +26,8 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 	}
 
 	@Override
-	public Persona encontrarPersonaPorId(Persona persona) {
-		 return personaDao.findPersonaById(persona);
+	public Persona encontrarPersonaPorId(Integer idPersona) {
+		 return personaDao.findPersonaById(idPersona);
 	}
 
 	@Override

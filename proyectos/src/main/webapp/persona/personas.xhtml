@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Personas</title>
+         <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" />
+    </h:head>
+    <h:body>
+        <h1>Lista de Personas</h1>
+        <h2>Todas las personas que estan relacionas a los proyectos</h2>
+        <h:form>
+            <p:growl id="messages" showDetail="true" />
+            <p:messages/>
+        
+            <p:dataTable value="#{personaListaBean.personas}" var="persona" border="1">
+                <f:facet name="header">
+                    Listado de Personas
+                </f:facet>
+                
+                <p:column headerText="Id">
+                  	<h:outputText value="#{persona.idPersona}"/>
+                </p:column>
+                
+                <p:column headerText="Nombre">                    
+                    <h:outputText value="#{persona.nombre}"/>
+                </p:column>
+                
+                <p:column headerText="Correo">                    
+                    <h:outputText value="#{persona.correo}"/>
+                </p:column>
+                
+                <p:column headerText="Telefono">                    
+                    <h:outputText value="#{persona.telefono}"/>
+                </p:column>
+                
+                <p:column headerText="Fecha Registro">                    
+                    <h:outputText value="#{persona.fechaRegistro}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">Acciones</f:facet>
+                    <p:commandButton   action="#{personaListaBean.editar(persona)}"  icon="fa fa-pencil" title="Editar"/>        
+                    <p:commandButton   action="#{personaListaBean.eliminarPersona(persona)}"  icon="fa fa-trash" title="Eliminar"/>
+                    <p:commandButton   action="#{personaListaBean.eliminarPersona(persona)}"  icon="fa fa-eye"  title="Consultar"/>                    
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:commandButton value="Nuevo" action="#{personaListaBean.nuevo()}"/>        
+        <p:commandButton value="Inicio" action="#{personaListaBean.inicio()}"/>
+
+    </h:body>
+</html>

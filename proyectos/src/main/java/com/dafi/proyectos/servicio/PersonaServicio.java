@@ -7,11 +7,11 @@ import javax.ejb.Local;
 import com.dafi.proyectos.modelo.Persona;
 
 @Local
-public interface PersonaServicio {
   
+public interface PersonaServicio {
   public List<Persona> listarPersonas();
     
-  public Persona encontrarPersonaPorId(Persona persona);
+  public Persona encontrarPersonaPorId(Integer idPersona);
   
   public Persona encontrarPersonaPorCorreo(Persona persona);
   

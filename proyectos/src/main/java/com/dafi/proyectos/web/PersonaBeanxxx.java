@@ -14,9 +14,9 @@ import com.dafi.proyectos.modelo.Persona;
 import com.dafi.proyectos.servicio.PersonaServicio;
 
 
-@Named("personaBean")
+@Named("personaBeanxxx")
 @RequestScoped
-public class PersonaBean {
+public class PersonaBeanxxx {
 	
     @Inject
     private PersonaServicio personaServicio;
@@ -25,7 +25,7 @@ public class PersonaBean {
     
     List<Persona> personas;
     
-    public PersonaBean(){      
+    public PersonaBeanxxx(){      
     }
 
     @PostConstruct

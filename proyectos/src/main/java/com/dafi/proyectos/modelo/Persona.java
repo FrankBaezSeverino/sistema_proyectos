@@ -29,7 +29,7 @@ public class Persona implements Serializable {
     @Column(name = "ID_PERSONA")
     private Integer idPersona;
 	
-	@Column(name = "FECHA_REGISTRO", nullable = false)
+	@Column(name = "FECHA_REGISTRO", nullable = true)
 	private LocalDate fechaRegistro;
 	
 	
