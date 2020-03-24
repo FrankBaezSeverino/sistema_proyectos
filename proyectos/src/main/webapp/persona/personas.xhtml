@@ -10,13 +10,25 @@
          <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome.min-jsf.css" />
     </h:head>
     <h:body>
-        <h1>Lista de Personas</h1>
-        <h2>Todas las personas que estan relacionas a los proyectos</h2>
-        <h:form>
+        <p:ajaxStatus style="width: 16px;height: 16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="images" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+
+        </p:ajaxStatus>
+        
+        <h:form id="form1">
             <p:growl id="messages" showDetail="true" />
             <p:messages/>
         
-            <p:dataTable value="#{personaListaBean.personas}" var="persona" border="1">
+            <p:dataTable id="lista" value="#{personaListaBean.personas}" var="persona"  
+            			selection="#{personaListaBean.personaSeleccionada}" selectionMode="single" 
+            			editable="true" rowKey="#{persona.idPersona}" 
+            			border="1">
                 <f:facet name="header">
                     Listado de Personas
                 </f:facet>
@@ -34,23 +46,53 @@
                 </p:column>
                 
                 <p:column headerText="Telefono">                    
-                    <h:outputText value="#{persona.telefono}"/>
+                    <h:outputText value="#{persona.telefono}"/>                     
                 </p:column>
                 
                 <p:column headerText="Fecha Registro">                    
-                    <h:outputText value="#{persona.fechaRegistro}"/>
+                    <h:outputText value="#{persona.fechaRegistro}">
+                     <f:convertDateTime pattern="dd-MM-yyyy" />
+                   	</h:outputText>
                 </p:column>
                 
                 <p:column>
                     <f:facet name="header">Acciones</f:facet>
                     <p:commandButton   action="#{personaListaBean.editar(persona)}"  icon="fa fa-pencil" title="Editar"/>        
-                    <p:commandButton   action="#{personaListaBean.eliminarPersona(persona)}"  icon="fa fa-trash" title="Eliminar"/>
+                    <p:commandButton   update=":form1:lista" oncomplete="PF('confirmDeleteDlg').show()"   icon="fa fa-trash" title="Eliminar">
+                    		<f:setPropertyActionListener value="#{persona}" 	target="#{personaListaBean.personaSeleccionada}" />
+					</p:commandButton>		
                     <p:commandButton   action="#{personaListaBean.eliminarPersona(persona)}"  icon="fa fa-eye"  title="Consultar"/>                    
                 </p:column>
             </p:dataTable>
+        	<p:commandButton value="Nuevo" action="#{personaListaBean.nuevo()}"  icon="fa fa-file" title="Nuevo"/>        
+        	<p:commandButton value="Inicio" action="#{personaListaBean.inicio()}"  icon="fa fa-home" title="Inicio"/>
+            
+            
+            <p:dialog header="Confirmar Eliminar" widgetVar="confirmDeleteDlg"
+					resizable="false" width="700" height="120" showEffect="clip"
+					hideEffect="clip" modal="true">
+         			
+         			<p:outputPanel layout="block" style="text-align:center" >
+								
+							<br></br>
+							
+							<h:outputText value="Seguro que desea eliminar el registro seleccionado?" /> 
+							<br></br>
+							<br></br>	
+							
+
+						<p:commandButton value="Si"
+							update=":form1:messages,:form1:lista"
+							action="#{personaListaBean.eliminarPersona()}"
+							oncomplete="PF('confirmDeleteDlg').hide()" />
+						<p:commandButton value="No" onclick="PF('confirmDeleteDlg').hide()"	type="button" />
+					</p:outputPanel>
+ 		
+			</p:dialog>
+        
         </h:form>
-        <p:commandButton value="Nuevo" action="#{personaListaBean.nuevo()}"/>        
-        <p:commandButton value="Inicio" action="#{personaListaBean.inicio()}"/>
+        
+
 
     </h:body>
 </html>

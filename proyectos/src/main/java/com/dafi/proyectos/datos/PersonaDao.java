@@ -8,13 +8,13 @@ public interface PersonaDao {
     
 	public List<Persona> findAllPersonas();
     
-    public Persona findPersonaById(Integer idPersona);
+    public Persona findPersonaById(Integer idPersona) throws Exception;
     
-    public Persona findPersonaByCorreo(Persona persona);
+    public Persona findPersonaByCorreo(Persona persona) throws Exception;
     
-    public void insertPersona(Persona persona);
+    public void insertPersona(Persona persona) throws Exception;
     
-    public void updatePersona(Persona persona);
+    public void updatePersona(Persona persona) throws Exception;
     
-    public void deletePersona(Persona persona);
+    public void deletePersona(Persona persona) throws Exception;
 }

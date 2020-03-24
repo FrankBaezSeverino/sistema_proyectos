@@ -1,7 +1,7 @@
 package com.dafi.proyectos.modelo;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -30,7 +30,7 @@ public class Persona implements Serializable {
     private Integer idPersona;
 	
 	@Column(name = "FECHA_REGISTRO", nullable = true)
-	private LocalDate fechaRegistro;
+	private Date fechaRegistro;
 	
 	
 	@Column(name = "NOMBRE", nullable = false,length = 150)
@@ -42,11 +42,11 @@ public class Persona implements Serializable {
     @Column(name = "TELEFONO", nullable = true,length = 30)
     private String telefono;
     
-	public LocalDate getFechaRegistro() {
+	public Date getFechaRegistro() {
 		return fechaRegistro;
 	}
 
-	public void setFechaRegistro(LocalDate fechaRegistro) {
+	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
 

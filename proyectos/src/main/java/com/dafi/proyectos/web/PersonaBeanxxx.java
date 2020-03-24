@@ -30,13 +30,13 @@ public class PersonaBeanxxx {
 
     @PostConstruct
     public void inicializar(){
-        this.personas = personaServicio.listarPersonas();        
+        //this.personas = personaServicio.listarPersonas();        
         this.personaSeleccionada = new Persona();
     }
     
     public void editListener(RowEditEvent event){
         Persona persona = (Persona) event.getObject();
-        personaServicio.modificarPersona(persona);
+        //personaServicio.modificarPersona(persona);
     }
     
     public Persona getPersonaSeleccionada() {
@@ -57,13 +57,13 @@ public class PersonaBeanxxx {
     }
     
     public void agregarPersona(){
-        this.personaServicio.registrarPersona(personaSeleccionada);
+        //this.personaServicio.registrarPersona(personaSeleccionada);
         this.personas.add(personaSeleccionada);
         this.personaSeleccionada = null;
     }
     
     public void eliminarPersona(){
-        this.personaServicio.eliminarPersona(personaSeleccionada);
+       // this.personaServicio.eliminarPersona(personaSeleccionada);
         this.personas.remove(this.personaSeleccionada);
         this.personaSeleccionada = null;
     }

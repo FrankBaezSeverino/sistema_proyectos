@@ -11,7 +11,10 @@
             <f:viewParam name="id"
                          value="#{personaBean.id}"
                          converter="javax.faces.Integer"/>
-            <f:viewAction action="#{personaBean.detallePersona()}"/>
+             <f:viewParam name="operacion"
+                         value="#{personaBean.operacion}"
+                         converter="javax.faces.Integer"/>
+            <f:viewAction action="#{personaBean.cargarPersona()}"/>
         </f:metadata>
     </h:head>
     <h:body>
@@ -20,24 +23,35 @@
             <p:growl id="messages" showDetail="true" />
             <p:messages/>
         
-          	<h:inputHidden id="idPersona" value="#{personaBean.persona.idPersona}"/>  
-              <p:outputPanel id="personaDetail" style="text-align: center">
-                    <p:panelGrid id="display" columns="4" columnClasses="label, value" >
+          	<h:inputHidden id="idPersona" value="#{personaBean.persona.idPersona}"/>           	  
+              <p:outputPanel id="personaDetail" style="text-align: center" >
+                    <p:panelGrid id="display" columns="3" columnClasses="label, value" >
            	
             			
-            			<h:outputLabel for="nombre" value="Name"/>
-            			<h:inputText id="nombre" value="#{personaBean.persona.nombre}"/>                
+            			<p:outputLabel for="nombre" value="Name"/>
+            			<p:inputText id="nombre" value="#{personaBean.persona.nombre}" required="true"
+            			 requiredMessage="Por favor entre su nombre."/>
+            			<p:message for="nombre" />
+                        			
+            			<p:outputLabel for="correo" value="Correo"/>
+            			<p:inputText id="correo" value="#{personaBean.persona.correo}"/>
+            			<p:message for="correo" />
             			
-            			<h:outputLabel for="correo" value="Correo"/>
-            			<h:inputText id="correo" value="#{personaBean.persona.correo}"/>
+            			<p:outputLabel for="telefono" value="Telefono"/>
+            			<p:inputText id="telefono" value="#{personaBean.persona.telefono}"/>
+            			<p:message for="telefono" />
             			
-            			<h:outputLabel for="telefono" value="Telefono"/>
-            			<h:inputText id="telefono" value="#{personaBean.persona.telefono}"/>
-						
+            			
+            			
+            			<p:outputLabel for="fechaRegistro" value="Fecha Registro" />
+        				<p:calendar id="fechaRegistro" value="#{personaBean.persona.fechaRegistro}" pattern="dd-MM-yyyy"/>
+        				<p:message for="fechaRegistro" />
+        				
+  						
 						<f:facet name="footer" >
-            				<p:commandButton value="Cancelar" action="#{personaBean.cancelar()}"/>
+            				<p:commandButton value="Cancelar" action="#{personaBean.cancelar()}" ajax="false"/>
             
-            				<p:commandButton value="Grabar" action="#{personaBean.grabarPersona()}"/>
+            				<p:commandButton value="Grabar" action="#{personaBean.grabarPersona()}" ajax="false"/>
             			</f:facet>
                    	</p:panelGrid>
           	</p:outputPanel>
