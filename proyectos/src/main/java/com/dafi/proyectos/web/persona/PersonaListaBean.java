@@ -54,7 +54,7 @@ public class PersonaListaBean {
 		       return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getIdPersona()+"&operacion="+ Operacion.MODIFICAR.ordinal();
 	    }
 
-	    public String nuevo(){        
+	    public String crear(){        
 		       return "/persona/persona?faces-redirect=true&id=0&operacion=" + Operacion.INSERTAR.ordinal();
 	    }
 

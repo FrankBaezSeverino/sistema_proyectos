@@ -1,12 +1,15 @@
 package com.dafi.proyectos.web.persona;
 
 
+import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.PrimeFaces;
 
 import com.dafi.proyectos.modelo.Persona;
 import com.dafi.proyectos.servicio.PersonaServicio;
@@ -16,9 +19,14 @@ import com.dafi.proyectos.web.enumeracion.Operacion;
 
 
 @Named("personaBean")
-@RequestScoped
-public class PersonaBean {
+@javax.faces.view.ViewScoped
+public class PersonaBean  implements Serializable{
    
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Inject
     private PersonaServicio personaServicio;
     
@@ -39,26 +47,52 @@ public class PersonaBean {
     	}
     }
 
-	public String grabarPersona() {	
+	public void grabarPersona() {	
 		try { 
 		  if (operacion==Operacion.INSERTAR.ordinal()) {
             	personaServicio.registrarPersona(persona);
             }
             else if (operacion==Operacion.MODIFICAR.ordinal()){
             	personaServicio.modificarPersona(persona);
-            }          	
-			//notificationSuccess("Grabar Persona");
-            return "/persona/personas?faces-redirect=true";
+            }
+		  	operacion=Operacion.MODIFICAR.ordinal();
+		  	id=persona.getIdPersona();
+		  	
+			notificationSuccess( "Registro grabado satisfactoriamente");
+			
+            //return "/persona/persona?faces-redirect=true& id="+persona.getIdPersona()+ "&operacion=" + Operacion.MODIFICAR.ordinal();
 		} catch (Exception e) {
-			notificationError(e,"Grabar Persona");
+			notificationError(e);
 			e.printStackTrace();
-		     return "/persona/persona?faces-redirect=true";
+			//return "/persona/persona?faces-redirect=true& id="+ id + "&operacion=" + operacion;
 		}
     }
 	
-	public String cancelar() {
+    public void eliminarPersona(){
+    	try { 
+    		this.personaServicio.eliminarPersona(persona);
+    		notificationSuccess("Registro eliminado con exito");    		
+		} catch (Exception e) {
+			notificationError(e);
+			e.printStackTrace();			
+		}
+    }
+	
+	public void cancelar() {
+		PrimeFaces.current().resetInputs("form:personaDetail");
+		notificationSuccess( "Registro cancelado");
+          //return "/persona/personas?faces-redirect=true";
+	}
+	
+	public String retornar() {	
           return "/persona/personas?faces-redirect=true";
 	}
+	
+    public String crear(){        
+	       return "/persona/persona?faces-redirect=true&id=0&operacion=" + Operacion.INSERTAR.ordinal();
+    }
+	
+	
     
     public void cargarPersona() {
     	try { 
@@ -67,11 +101,11 @@ public class PersonaBean {
 	                persona = new Persona();
 	            }else {
 	            	persona = personaServicio.encontrarPersonaPorId(id);
-	            }
-	            id = null;
+	            }	            
 	        }
+	        
 		} catch (Exception e) {
-			notificationError(e,"Grabar Persona");
+			notificationError(e);
 			e.printStackTrace();
 		    
 		}
@@ -102,14 +136,26 @@ public class PersonaBean {
 		this.operacion = operacion;
 	}
 	
-	public void notificationSuccess(String operation) {
-		FacesMessage msg =new FacesMessage(FacesMessage.SEVERITY_INFO, operation, "");		
+	public void notificationSuccess(String mensaje) {
+		FacesMessage msg =new FacesMessage(FacesMessage.SEVERITY_INFO, mensaje,null);		
 		FacesContext.getCurrentInstance().addMessage(null, msg);  
 	}
 
 
-	public void notificationError(Exception e, String operation) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, operation,e.getMessage());		
+	public void notificationError(Exception e ) {
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.toString(),null);		
 		FacesContext.getCurrentInstance().addMessage(null, msg);  
+	}
+	
+	public String isOperacionConsultar() {
+		return operacion==Operacion.CONSULTAR.ordinal()?"true":"false";
+	}
+	
+	public String isOperacionModificar() {
+		return operacion==Operacion.MODIFICAR.ordinal()?"true":"false";
+	}
+	
+	public String isOperacionInsertar() {
+		return operacion==Operacion.INSERTAR.ordinal()?"true":"false";
 	}
 }

@@ -17,41 +17,54 @@
             <f:viewAction action="#{personaBean.cargarPersona()}"/>
         </f:metadata>
     </h:head>
-    <h:body>
-        <h1>Datos Personas</h1>
-        <h:form>
-            <p:growl id="messages" showDetail="true" />
-            <p:messages/>
+    <h:body>        
+        <h:form id ="form" >
+            <p:growl id="messages" showDetail="false" life="3000" />          
         
-          	<h:inputHidden id="idPersona" value="#{personaBean.persona.idPersona}"/>           	  
+          	           	  
               <p:outputPanel id="personaDetail" style="text-align: center" >
-                    <p:panelGrid id="display" columns="3" columnClasses="label, value" >
-           	
-            			
+              		<h:inputHidden id="idPersona" value="#{personaBean.persona.idPersona}"/>
+                    <p:panelGrid id="display" columns="6" columnClasses="label, value"  >
+                      	 <f:facet name="header" >
+  						 	Registro de Personas
+            			</f:facet>            			
             			<p:outputLabel for="nombre" value="Name"/>
             			<p:inputText id="nombre" value="#{personaBean.persona.nombre}" required="true"
-            			 requiredMessage="Por favor entre su nombre."/>
-            			<p:message for="nombre" />
+            			 requiredMessage="Por favor entre su nombre." disabled="#{personaBean.isOperacionConsultar()}"/>
+            			 <p:message for="nombre" />
                         			
             			<p:outputLabel for="correo" value="Correo"/>
-            			<p:inputText id="correo" value="#{personaBean.persona.correo}"/>
+            			<p:inputText id="correo" required="true"
+            						value="#{personaBean.persona.correo}"
+            						validatorMessage="Formato de correo invalido."
+            						requiredMessage="Por favor entre su correo.">
+            			  <f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</p:inputText>
             			<p:message for="correo" />
             			
             			<p:outputLabel for="telefono" value="Telefono"/>
-            			<p:inputText id="telefono" value="#{personaBean.persona.telefono}"/>
+            			<p:inputMask id="telefono" value="#{personaBean.persona.telefono}"  mask="(999) 999-9999"/>
             			<p:message for="telefono" />
             			
             			
             			
             			<p:outputLabel for="fechaRegistro" value="Fecha Registro" />
-        				<p:calendar id="fechaRegistro" value="#{personaBean.persona.fechaRegistro}" pattern="dd-MM-yyyy"/>
+        				<p:calendar id="fechaRegistro" value="#{personaBean.persona.fechaRegistro}" pattern="dd-MM-yyyy" mask="true" disabled="true"/>
         				<p:message for="fechaRegistro" />
-        				
-  						
-						<f:facet name="footer" >
-            				<p:commandButton value="Cancelar" action="#{personaBean.cancelar()}" ajax="false"/>
+        				<f:facet name="footer">
+							<p:commandButton value="Retornar" action="#{personaBean.retornar()}" ajax="false"  immediate="true" style="margin-right:5px;"  icon="fa fa-arrow-circle-left" title="Retornar"/>
+							
+						    <p:commandButton value="Crear" action="#{personaBean.crear()}" ajax="false"  immediate="true" style="margin-right:5px;"  icon="fa fa-file" title="Crear"/>
             
-            				<p:commandButton value="Grabar" action="#{personaBean.grabarPersona()}" ajax="false"/>
+            
+                        	<p:commandButton value="Cancelar" action="#{personaBean.cancelar()}" immediate="true" ajax="false" style="margin-right:5px;"  icon="fa fa-ban" title="Cancelar">
+                				<p:resetInput target="personaDetail" />
+            				</p:commandButton>				
+      
+   							<p:commandButton value="Eliminar" action="#{personaBean.eliminarPersona()}" ajax="false" immediate="true" style="margin-right:5px;"  icon="fa fa-trash" title="Eliminar"/>         
+            				
+            				<p:commandButton value="Grabar" action="#{personaBean.grabarPersona()}" ajax="false" style="margin-right:5px;"  icon="fa fa-floppy-o" title="Grabar"/>
             			</f:facet>
                    	</p:panelGrid>
           	</p:outputPanel>
