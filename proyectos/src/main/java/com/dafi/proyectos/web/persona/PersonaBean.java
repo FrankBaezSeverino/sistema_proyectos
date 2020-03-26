@@ -71,6 +71,7 @@ public class PersonaBean  implements Serializable{
     public void eliminarPersona(){
     	try { 
     		this.personaServicio.eliminarPersona(persona);
+    		operacion=Operacion.CONSULTAR.ordinal();
     		notificationSuccess("Registro eliminado con exito");    		
 		} catch (Exception e) {
 			notificationError(e);
@@ -158,4 +159,29 @@ public class PersonaBean  implements Serializable{
 	public String isOperacionInsertar() {
 		return operacion==Operacion.INSERTAR.ordinal()?"true":"false";
 	}
+	
+	public String isDesahabilitarBotonGrabar() {
+		if (operacion==Operacion.CONSULTAR.ordinal()) {
+			return "true";
+		}else {
+			return "false";
+		}	
+	}
+	
+	public String isDesahabilitarBotonEliminar() {
+		if (operacion==Operacion.CONSULTAR.ordinal() || operacion!=Operacion.MODIFICAR.ordinal())  {
+			return "true";
+		}else {
+			return "false";
+		}	
+	}
+	
+	public String isDesahabilitarBotonCancelar() {
+		if (operacion==Operacion.CONSULTAR.ordinal() )  {
+			return "true";
+		}else {
+			return "false";
+		}	
+	}
+
 }

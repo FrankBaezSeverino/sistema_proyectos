@@ -24,6 +24,10 @@
         <h:form id="form1">        
             <p:growl id="messages" showDetail="false" life="3000"/>
             <p:messages/>
+
+   			<p:commandButton value="Inicio" action="#{personaListaBean.inicio()}"  icon="fa fa-home" title="Inicio"/>
+   			<p:commandButton value="Crear" action="#{personaListaBean.crear()}"  icon="fa fa-file" title="Crear"/>        
+   			
         
             <p:dataTable id="lista" value="#{personaListaBean.personas}" var="persona"  
             			selection="#{personaListaBean.personaSeleccionada}" selectionMode="single" 
@@ -61,15 +65,18 @@
                 
                 <p:column>
                     <f:facet name="header">Acciones</f:facet>
+                
                     <p:commandButton   action="#{personaListaBean.editar(persona)}"  icon="fa fa-pencil" title="Editar"/>        
+                   
                     <p:commandButton   update=":form1:lista" oncomplete="PF('confirmDeleteDlg').show()"   icon="fa fa-trash" title="Eliminar">
                     		<f:setPropertyActionListener value="#{persona}" 	target="#{personaListaBean.personaSeleccionada}" />
 					</p:commandButton>		
+                   
                     <p:commandButton   action="#{personaListaBean.consultar(persona)}"  icon="fa fa-eye"  title="Consultar"/>                    
+                
                 </p:column>
+
             </p:dataTable>
-        	<p:commandButton value="Crear" action="#{personaListaBean.crear()}"  icon="fa fa-file" title="Crear"/>        
-        	<p:commandButton value="Inicio" action="#{personaListaBean.inicio()}"  icon="fa fa-home" title="Inicio"/>
             
             
             <p:dialog header="Confirmar Eliminar" widgetVar="confirmDeleteDlg"

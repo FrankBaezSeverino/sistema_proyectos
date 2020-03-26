@@ -17,7 +17,17 @@
             <f:viewAction action="#{personaBean.cargarPersona()}"/>
         </f:metadata>
     </h:head>
-    <h:body>        
+    <h:body>      
+        <p:ajaxStatus style="width: 16px;height: 16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="images" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>  
+       
         <h:form id ="form" >
             <p:growl id="messages" showDetail="false" life="3000" />          
         
@@ -37,14 +47,14 @@
             			<p:inputText id="correo" required="true"
             						value="#{personaBean.persona.correo}"
             						validatorMessage="Formato de correo invalido."
-            						requiredMessage="Por favor entre su correo.">
+            						requiredMessage="Por favor entre su correo." disabled="#{personaBean.isOperacionConsultar()}">
             			  <f:validateRegex
 							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						</p:inputText>
             			<p:message for="correo" />
             			
             			<p:outputLabel for="telefono" value="Telefono"/>
-            			<p:inputMask id="telefono" value="#{personaBean.persona.telefono}"  mask="(999) 999-9999"/>
+            			<p:inputMask id="telefono" value="#{personaBean.persona.telefono}"  mask="(999) 999-9999" disabled="#{personaBean.isOperacionConsultar()}"/>
             			<p:message for="telefono" />
             			
             			
@@ -53,21 +63,63 @@
         				<p:calendar id="fechaRegistro" value="#{personaBean.persona.fechaRegistro}" pattern="dd-MM-yyyy" mask="true" disabled="true"/>
         				<p:message for="fechaRegistro" />
         				<f:facet name="footer">
-							<p:commandButton value="Retornar" action="#{personaBean.retornar()}" ajax="false"  immediate="true" style="margin-right:5px;"  icon="fa fa-arrow-circle-left" title="Retornar"/>
+							<p:commandButton 	value="Retornar" 
+												action="#{personaBean.retornar()}" 
+												ajax="false"  immediate="true" 
+												style="margin-right:5px;"  
+												icon="fa fa-arrow-circle-left" title="Retornar"/>
 							
-						    <p:commandButton value="Crear" action="#{personaBean.crear()}" ajax="false"  immediate="true" style="margin-right:5px;"  icon="fa fa-file" title="Crear"/>
+						    <p:commandButton value="Crear" 
+						    				action="#{personaBean.crear()}" 
+						    				ajax="false"  immediate="true" 
+						    				style="margin-right:5px;"  icon="fa fa-file" title="Crear"/>
             
             
-                        	<p:commandButton value="Cancelar" action="#{personaBean.cancelar()}" immediate="true" ajax="false" style="margin-right:5px;"  icon="fa fa-ban" title="Cancelar">
+                        	<p:commandButton value="Cancelar" action="#{personaBean.cancelar()}" 
+                        					immediate="true" ajax="false" style="margin-right:5px;"  
+                        					icon="fa fa-ban" title="Cancelar" 
+                        					disabled="#{personaBean.isDesahabilitarBotonCancelar()}">
                 				<p:resetInput target="personaDetail" />
             				</p:commandButton>				
       
-   							<p:commandButton value="Eliminar" action="#{personaBean.eliminarPersona()}" ajax="false" immediate="true" style="margin-right:5px;"  icon="fa fa-trash" title="Eliminar"/>         
+   							<p:commandButton 		value="Eliminar" 
+   							 						update=":form:personaDetail" oncomplete="PF('confirmDeleteDlg').show()"   													 
+   													ajax="true" immediate="true" style="margin-right:5px;"  
+   													icon="fa fa-trash" title="Eliminar" 
+   													disabled="#{personaBean.isDesahabilitarBotonEliminar()}"/>         
             				
-            				<p:commandButton value="Grabar" action="#{personaBean.grabarPersona()}" ajax="false" style="margin-right:5px;"  icon="fa fa-floppy-o" title="Grabar"/>
+            				<p:commandButton 	value="Grabar" 
+            									action="#{personaBean.grabarPersona()}" 
+            									ajax="false" style="margin-right:5px;"  
+            									icon="fa fa-floppy-o" title="Grabar" 
+            									disabled="#{personaBean.isDesahabilitarBotonGrabar()}" />
             			</f:facet>
                    	</p:panelGrid>
           	</p:outputPanel>
+          	
+          	
+          	<p:dialog header="Confirmar Eliminar" widgetVar="confirmDeleteDlg"
+					resizable="false" width="700" height="120" showEffect="clip"
+					hideEffect="clip" modal="true">
+         			
+         			<p:outputPanel layout="block" style="text-align:center" >
+								
+							<br></br>
+							
+							<h:outputText value="Seguro que desea eliminar el registro" /> 
+							<br></br>
+							<br></br>	
+							
+
+						<p:commandButton value="Si"
+							update=":form:messages,:form:personaDetail"
+							action="#{personaBean.eliminarPersona()}"
+							oncomplete="PF('confirmDeleteDlg').hide()" />
+						<p:commandButton value="No" onclick="PF('confirmDeleteDlg').hide()"	type="button" />
+					</p:outputPanel>
+ 		
+			</p:dialog>
+          	
         </h:form>
     </h:body>
 </html>
