@@ -27,18 +27,48 @@
 
    			<p:commandButton value="Inicio" action="#{personaListaBean.inicio()}"  icon="fa fa-home" title="Inicio"/>
    			<p:commandButton value="Crear" action="#{personaListaBean.crear()}"  icon="fa fa-file" title="Crear"/>        
+
+    		<p:panel id="parametros" header="Parametros de Busqueda"  style="margin-bottom:5px">
+        		<h:panelGrid columns="6" cellpadding="5" columnClasses="label, value" >
+
+           				<p:outputLabel   	for="parametroPersona" value="Name"/>
+            			<p:autoComplete 	id="parametroPersona" 
+            								value="#{personaListaBean.parametroPersona}"
+            								completeMethod="#{personaListaBean.completePersona}"
+            								var="persona"
+            								itemLabel="#{persona.nombre}" 
+            								itemValue="#{persona}" 
+            								converter="#{personaConverter}" 
+            								forceSelection="true" 
+            								maxResults="5"/>
+
+            			<p:outputLabel for="parametroCorreo" value="Correo"/>
+            			<p:inputText id="parametroCorreo" 	value="#{personaListaBean.parametroCorreo}"/>
+    			
+            			<p:outputLabel for="telefono" value="Telefono"/>
+            			<p:inputMask id="telefono" value="#{personaListaBean.parametroTelefono}"  mask="(999) 999-9999" />
+            			
+            			<p:outputLabel for="fechaRegistroInicial" value="Fecha Registro Inical" />
+        				<p:calendar id="fechaRegistroInicial" value="#{personaListaBean.paramatroFechaRegistroInicial}" pattern="dd-MM-yyyy" mask="true"/>
+
+            			<p:outputLabel for="fechaRegistroFinal" value="Fecha Registro Final" />
+        				<p:calendar id="fechaRegistroFinal" value="#{personaListaBean.paramatroFechaRegistroFinal}" pattern="dd-MM-yyyy" mask="true"/>
+
+        		</h:panelGrid>
+
+    		</p:panel>
    			
         
             <p:dataTable id="lista" value="#{personaListaBean.personas}" var="persona"  
             			selection="#{personaListaBean.personaSeleccionada}" selectionMode="single" 
             			editable="true" paginator="true"
-						rows="10"
+						rows="5"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,15" 
             			rowKey="#{persona.idPersona}" 
             			border="1" paginatorPosition="bottom">
                 <f:facet name="header">
-                    Listado de Personas
+                    Resultados busqueda
                 </f:facet>
                 
                 <p:column headerText="Id">
@@ -68,8 +98,11 @@
                 
                     <p:commandButton   action="#{personaListaBean.editar(persona)}"  icon="fa fa-pencil" title="Editar"/>        
                    
-                    <p:commandButton   update=":form1:lista" oncomplete="PF('confirmDeleteDlg').show()"   icon="fa fa-trash" title="Eliminar">
-                    		<f:setPropertyActionListener value="#{persona}" 	target="#{personaListaBean.personaSeleccionada}" />
+                    <p:commandButton   	update=":form1:lista" 
+                    					oncomplete="PF('confirmDeleteDlg').show()"   
+                    					icon="fa fa-trash" title="Eliminar"
+                    					ajax="true">
+                    						<f:setPropertyActionListener value="#{persona}" 	target="#{personaListaBean.personaSeleccionada}" />
 					</p:commandButton>		
                    
                     <p:commandButton   action="#{personaListaBean.consultar(persona)}"  icon="fa fa-eye"  title="Consultar"/>                    
@@ -94,6 +127,7 @@
 
 						<p:commandButton value="Si"
 							update=":form1:messages,:form1:lista"
+							ajax="true"
 							action="#{personaListaBean.eliminarPersona()}"
 							oncomplete="PF('confirmDeleteDlg').hide()" />
 						<p:commandButton value="No" onclick="PF('confirmDeleteDlg').hide()"	type="button" />

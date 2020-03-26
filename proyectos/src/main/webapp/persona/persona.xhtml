@@ -62,6 +62,7 @@
             			<p:outputLabel for="fechaRegistro" value="Fecha Registro" />
         				<p:calendar id="fechaRegistro" value="#{personaBean.persona.fechaRegistro}" pattern="dd-MM-yyyy" mask="true" disabled="true"/>
         				<p:message for="fechaRegistro" />
+        				
         				<f:facet name="footer">
 							<p:commandButton 	value="Retornar" 
 												action="#{personaBean.retornar()}" 
@@ -76,8 +77,9 @@
             
             
                         	<p:commandButton value="Cancelar" action="#{personaBean.cancelar()}" 
-                        					immediate="true" ajax="false" style="margin-right:5px;"  
+                        					immediate="true" ajax="true" style="margin-right:5px;"  
                         					icon="fa fa-ban" title="Cancelar" 
+                        					update=":form:messages,:form:personaDetail"
                         					disabled="#{personaBean.isDesahabilitarBotonCancelar()}">
                 				<p:resetInput target="personaDetail" />
             				</p:commandButton>				
@@ -90,8 +92,9 @@
             				
             				<p:commandButton 	value="Grabar" 
             									action="#{personaBean.grabarPersona()}" 
-            									ajax="false" style="margin-right:5px;"  
+            									ajax="true" style="margin-right:5px;"  
             									icon="fa fa-floppy-o" title="Grabar" 
+            									update=":form:messages,:form:personaDetail"
             									disabled="#{personaBean.isDesahabilitarBotonGrabar()}" />
             			</f:facet>
                    	</p:panelGrid>
