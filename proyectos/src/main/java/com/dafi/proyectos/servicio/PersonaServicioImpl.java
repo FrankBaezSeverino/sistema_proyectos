@@ -10,11 +10,12 @@ import javax.inject.Inject;
 
 import com.dafi.proyectos.datos.PersonaDao;
 import com.dafi.proyectos.modelo.Persona;
+import com.dafi.proyectos.util.Parametro;
 
 @Stateless
 public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemoto {
-
-    @Inject
+	
+	@Inject
     private PersonaDao personaDao;
 	
     @Resource
@@ -24,10 +25,28 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 	public List<Persona> listarPersonas() throws Exception{
 		  return personaDao.findAllPersonas();
 	}
+	
+	@Override
+	public List<Persona> listarPersonas(Persona persona) throws Exception{
+		  return personaDao.findPersonas(persona);
+	}
+	
+	@Override
+	public List<Persona> listarPersonas(List<Parametro> parametros) throws Exception {	
+		return personaDao.findPersonas(parametros);
+	}
+
 
 	@Override
 	public Persona encontrarPersonaPorId(Integer idPersona) throws Exception{
 		 return personaDao.findPersonaById(idPersona);
+	}
+	
+	@Override
+	public Persona encontrarPersonaPorId(Persona persona) throws Exception{
+		 return personaDao.findPersonaById(persona.getIdPersona());
+		 
+
 	}
 
 	@Override
@@ -53,5 +72,4 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 		   personaDao.deletePersona(persona);
 
 	}
-
 }

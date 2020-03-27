@@ -13,6 +13,7 @@ import javax.inject.Named;
 
 import com.dafi.proyectos.modelo.Persona;
 import com.dafi.proyectos.servicio.PersonaServicio;
+import com.dafi.proyectos.util.Parametro;
 import com.dafi.proyectos.web.enumeracion.Operacion;
 
 @Named("personaListaBean")
@@ -39,6 +40,7 @@ public class PersonaListaBean implements Serializable{
 	    private String parametroTelefono;
 	    private Date paramatroFechaRegistroInicial;
 	    private Date paramatroFechaRegistroFinal;
+	    private List<Parametro> parametros=new ArrayList<Parametro>();
 	    
 	    public PersonaListaBean(){      
 	    }
@@ -53,9 +55,40 @@ public class PersonaListaBean implements Serializable{
 	        return personas;
 	    }
 	    
-	    public void cargarLista() {
+	    
+	    
+	    public void buscar() {
+	    	cargarParametros(); 
+	    	cargarLista();
+	    	
+	    }
+	    
+	    private void cargarParametros() {	    	
+	    	cargarParametro("correo","=",parametroCorreo);
+	    	cargarParametro("correo","=",parametroTelefono);
+	    	cargarParametro("fechaRegistro",">=",paramatroFechaRegistroInicial);
+	    	cargarParametro("fechaRegistro","<=",paramatroFechaRegistroFinal);	    
+	    }
+	    
+	    
+	    private void cargarParametro(String nombre,String operador,Object valor) {
+	    	if (valor!=null) {
+	    		parametros.add(new Parametro(nombre,operador,valor));
+	    	}
+	    	
+	    }
+	    
+	    
+	    
+	    private void cargarLista() {
 	    	try { 
-	    		this.personas = personaServicio.listarPersonas();  
+	    		if (parametroPersona!=null) {
+	    			this.personas = personaServicio.listarPersonas(parametroPersona);
+	    		}else if (!parametros.isEmpty()) {
+	    			this.personas = personaServicio.listarPersonas(parametros);
+	    		}else {
+	    			this.personas = personaServicio.listarPersonas();
+	    		}
 			} catch (Exception e) {
 				notificationError(e);
 				e.printStackTrace();		
