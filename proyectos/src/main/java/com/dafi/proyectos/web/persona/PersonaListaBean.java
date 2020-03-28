@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.criteria.Predicate;
 
 import com.dafi.proyectos.modelo.Persona;
 import com.dafi.proyectos.servicio.PersonaServicio;
@@ -40,7 +41,7 @@ public class PersonaListaBean implements Serializable{
 	    private String parametroTelefono;
 	    private Date paramatroFechaRegistroInicial;
 	    private Date paramatroFechaRegistroFinal;
-	    private List<Parametro> parametros=new ArrayList<Parametro>();
+	    List<Predicate> criterios = new ArrayList<Predicate>();
 	    
 	    public PersonaListaBean(){      
 	    }
@@ -71,12 +72,7 @@ public class PersonaListaBean implements Serializable{
 	    }
 	    
 	    
-	    private void cargarParametro(String nombre,String operador,Object valor) {
-	    	if (valor!=null) {
-	    		parametros.add(new Parametro(nombre,operador,valor));
-	    	}
-	    	
-	    }
+	 
 	    
 	    
 	    
@@ -84,8 +80,8 @@ public class PersonaListaBean implements Serializable{
 	    	try { 
 	    		if (parametroPersona!=null) {
 	    			this.personas = personaServicio.listarPersonas(parametroPersona);
-	    		}else if (!parametros.isEmpty()) {
-	    			this.personas = personaServicio.listarPersonas(parametros);
+	    		}else if (!criterios.isEmpty()) {
+	    			this.personas = personaServicio.listarPersonas(criterios);
 	    		}else {
 	    			this.personas = personaServicio.listarPersonas();
 	    		}

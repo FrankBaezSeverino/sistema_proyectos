@@ -3,9 +3,9 @@ package com.dafi.proyectos.servicio;
 import java.util.List;
 
 import javax.ejb.Remote;
+import javax.persistence.criteria.Predicate;
 
 import com.dafi.proyectos.modelo.Persona;
-import com.dafi.proyectos.util.Parametro;
 
 @Remote
 public interface PersonaServicioRemoto {
@@ -14,7 +14,7 @@ public interface PersonaServicioRemoto {
 	  
 	  public List<Persona> listarPersonas(Persona persona) throws Exception;
 	  
-	  public List<Persona> listarPersonas(List<Parametro> parametros) throws Exception;
+	  public List<Persona> listarPersonas(List<Predicate> criterios) throws Exception;
 	    
 	    public Persona encontrarPersonaPorId(Integer idPersona) throws Exception;
 	    

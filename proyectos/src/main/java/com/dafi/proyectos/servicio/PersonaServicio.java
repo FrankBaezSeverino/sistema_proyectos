@@ -3,9 +3,10 @@ package com.dafi.proyectos.servicio;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.persistence.criteria.Predicate;
 
 import com.dafi.proyectos.modelo.Persona;
-import com.dafi.proyectos.util.Parametro;
+
 
 @Local
   
@@ -15,7 +16,7 @@ public interface PersonaServicio {
     
   public List<Persona> listarPersonas(Persona persona) throws Exception;
   
-  public List<Persona> listarPersonas(List<Parametro> parametros) throws Exception;
+  public List<Persona> listarPersonas(List<Predicate> criterios) throws Exception;
   
   public Persona encontrarPersonaPorId(Integer idPersona) throws Exception;
   

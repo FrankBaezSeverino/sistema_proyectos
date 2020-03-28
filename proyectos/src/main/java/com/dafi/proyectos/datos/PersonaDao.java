@@ -2,8 +2,9 @@ package com.dafi.proyectos.datos;
 
 import java.util.List;
 
+import javax.persistence.criteria.Predicate;
+
 import com.dafi.proyectos.modelo.Persona;
-import com.dafi.proyectos.util.Parametro;
 
 public interface PersonaDao {	
     
@@ -11,7 +12,7 @@ public interface PersonaDao {
 	
 	public List<Persona> findPersonas(Persona persona)  throws Exception;
 	
-	public List<Persona> findPersonas(List<Parametro> parametros)  throws Exception;
+	public List<Persona> findPersonas(List<Predicate> criterios)  throws Exception;
     
     public Persona findPersonaById(Integer idPersona) throws Exception;
     

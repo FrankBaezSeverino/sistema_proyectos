@@ -1,6 +1,6 @@
 package com.dafi.proyectos.datos;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -11,7 +11,6 @@ import javax.persistence.criteria.Root;
 import javax.persistence.*;
 
 import com.dafi.proyectos.modelo.Persona;
-import com.dafi.proyectos.util.Parametro;
 
 @Stateless
 public class PersonaDaoImpl implements PersonaDao {
@@ -69,42 +68,41 @@ public class PersonaDaoImpl implements PersonaDao {
 
 
 	@Override
-	public List<Persona> findPersonas(List<Parametro> parametros) throws Exception{
+	public List<Persona> findPersonas(List<Predicate> criterios) throws Exception{
 	 
 	    CriteriaBuilder qb = em.getCriteriaBuilder();
 	    CriteriaQuery cq = qb.createQuery();
 	    Root<Persona> persona = cq.from(Persona.class);
 	
 	    	    
-	    List<Predicate> predicates = new ArrayList<Predicate>();
-
-	    Object a;
-	    Object b;
-	    
-	    
-	    for(Parametro parametro : parametros)
-	    {
-	        predicates.add(qb.equal(persona.get(parametro.getNombre()), parametro.getValor()));
-	        predicates.add(qb.equal(persona.get(parametro.getNombre()),a));
-	        //predicates.add(qb.like(persona.get(parametro.getNombre()), parametro.getValor()));
-	      //  predicates.add(qb.between(persona.get(parametro.getNombre()), a, b));
-	        predicates.add(qb.greaterThanOrEqualTo(parametro.getNombre(), a));
-
-	        
-	    }
+	    //List<Predicate> predicates = new ArrayList<Predicate>();
+//
+//	    Object a;
+//	    Object b;
+//	    
+//	    
+//	    for(Parametro parametro : parametros)
+//	    {
+//	        predicates.add(qb.equal(persona.get(parametro.getNombre()), parametro.getValor()));
+//	        predicates.add(qb.equal(persona.get(parametro.getNombre()),a));
+//	        //predicates.add(qb.like(persona.get(parametro.getNombre()), parametro.getValor()));
+//	      //  predicates.add(qb.between(persona.get(parametro.getNombre()), a, b));
+//	        predicates.add(qb.greaterThanOrEqualTo(parametro.getNombre(), a));
+//
+//	        
+//	    }
 	    
 	    //Adding predicates in case of parameter not being null
-	    if (param1 != null) {
-	    }
-	    if (paramNull != null) {
-	        predicates.add(
-	                qb.equal(persona.get("someOtherAttribute"), paramNull));
-	    }
+//	    if (param1 != null) {
+//	    }
+//	    if (paramNull != null) {
+//	        predicates.add(
+//	                qb.equal(persona.get("someOtherAttribute"), paramNull));
+//	    }
 	    //query itself
-	    cq.select(customer)
-	            .where(predicates.toArray(new Predicate[]{}));
+	     cq.select(persona).where(criterios.toArray(new Predicate[]{}));
 	    //execute query and do something with result
-	    em.createQuery(cq).getResultList();
+	     return em.createQuery(cq).getResultList();
 	}
 
 }

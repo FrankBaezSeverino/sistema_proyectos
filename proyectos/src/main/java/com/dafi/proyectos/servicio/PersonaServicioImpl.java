@@ -7,10 +7,10 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.criteria.Predicate;
 
 import com.dafi.proyectos.datos.PersonaDao;
 import com.dafi.proyectos.modelo.Persona;
-import com.dafi.proyectos.util.Parametro;
 
 @Stateless
 public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemoto {
@@ -32,8 +32,8 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 	}
 	
 	@Override
-	public List<Persona> listarPersonas(List<Parametro> parametros) throws Exception {	
-		return personaDao.findPersonas(parametros);
+	public List<Persona> listarPersonas(List<Predicate> criterios) throws Exception {	
+		return personaDao.findPersonas(criterios);
 	}
 
 
