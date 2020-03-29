@@ -2,15 +2,7 @@
     <persistence-unit name="proyectos" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/proyectosDS</jta-data-source>
-        <class>com.dafi.proyectos.modelo.ImpedimentoProyecto</class>
-        <class>com.dafi.proyectos.modelo.InteresadoProyecto</class>
-        <class>com.dafi.proyectos.modelo.LeccionAprendidaProyecto</class>
-        <class>com.dafi.proyectos.modelo.MiembroProyecto</class>
-        <class>com.dafi.proyectos.modelo.MinutaProyecto</class>
-        <class>com.dafi.proyectos.modelo.Persona</class>
-        <class>com.dafi.proyectos.modelo.Proyecto</class>
-        <class>com.dafi.proyectos.modelo.RiesgoProyecto</class>
-        <class>com.dafi.proyectos.modelo.SolicitudCambioProyecto</class>        
+        <class>com.dafi.proyectos.persona.modelo.Persona</class>       
         <shared-cache-mode>NONE</shared-cache-mode> <!-- test design time and deployment of JPA 2.0 -->
         <properties>
             <!-- Application managed datasource -->
