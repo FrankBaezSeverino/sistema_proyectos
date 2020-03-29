@@ -1,8 +1,8 @@
 package com.dafi.proyectos.web.persona;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -14,7 +14,7 @@ import javax.persistence.criteria.Predicate;
 
 import com.dafi.proyectos.modelo.Persona;
 import com.dafi.proyectos.servicio.PersonaServicio;
-import com.dafi.proyectos.util.Parametro;
+import com.dafi.proyectos.util.Fecha;
 import com.dafi.proyectos.web.enumeracion.Operacion;
 
 @Named("personaListaBean")
@@ -39,8 +39,8 @@ public class PersonaListaBean implements Serializable{
 	    private Persona parametroPersona;
 	    private String parametroCorreo;
 	    private String parametroTelefono;
-	    private Date paramatroFechaRegistroInicial;
-	    private Date paramatroFechaRegistroFinal;
+	    private Date parametroFechaRegistroInicial;
+	    private Date parametroFechaRegistroFinal;
 	    List<Predicate> criterios = new ArrayList<Predicate>();
 	    
 	    public PersonaListaBean(){      
@@ -64,17 +64,23 @@ public class PersonaListaBean implements Serializable{
 	    	
 	    }
 	    
-	    private void cargarParametros() {	    	
-	    	cargarParametro("correo","=",parametroCorreo);
-	    	cargarParametro("correo","=",parametroTelefono);
-	    	cargarParametro("fechaRegistro",">=",paramatroFechaRegistroInicial);
-	    	cargarParametro("fechaRegistro","<=",paramatroFechaRegistroFinal);	    
+	    private void cargarParametros() {
+	    	
+	    	if (parametroCorreo!=null && parametroCorreo!="" && !parametroCorreo.isEmpty()) {
+	    		criterios.add(personaServicio.getCriteriaBuilder().equal(personaServicio.getRootPersona().get("correo"), parametroCorreo));
+	    	}
+	    	
+	    	if (parametroTelefono!=null && parametroTelefono!="" && !parametroTelefono.isEmpty()) {
+	    		criterios.add(personaServicio.getCriteriaBuilder().equal(personaServicio.getRootPersona().get("telefono"), parametroTelefono));
+	    	}
+	    	
+	    	if (parametroFechaRegistroInicial !=null && parametroFechaRegistroFinal !=null) {
+	    		criterios.add(personaServicio.getCriteriaBuilder().between(personaServicio.getRootPersona().get("fechaRegistro"),  parametroFechaRegistroInicial,Fecha.sumarRestarHorasFecha(parametroFechaRegistroFinal, 24) ));
+	    	}	    	
+   
 	    }
 	    
-	    
-	 
-	    
-	    
+	  
 	    
 	    private void cargarLista() {
 	    	try { 
@@ -82,6 +88,7 @@ public class PersonaListaBean implements Serializable{
 	    			this.personas = personaServicio.listarPersonas(parametroPersona);
 	    		}else if (!criterios.isEmpty()) {
 	    			this.personas = personaServicio.listarPersonas(criterios);
+	    			criterios.clear();
 	    		}else {
 	    			this.personas = personaServicio.listarPersonas();
 	    		}
@@ -191,20 +198,20 @@ public class PersonaListaBean implements Serializable{
 			this.parametroTelefono = parametroTelefono;
 		}
 
-		public Date getParamatroFechaRegistroInicial() {
-			return paramatroFechaRegistroInicial;
+		public Date getParametroFechaRegistroInicial() {
+			return parametroFechaRegistroInicial;
 		}
 
-		public void setParamatroFechaRegistroInicial(Date paramatroFechaRegistroInicial) {
-			this.paramatroFechaRegistroInicial = paramatroFechaRegistroInicial;
+		public void setParametroFechaRegistroInicial(Date paramatroFechaRegistroInicial) {
+			this.parametroFechaRegistroInicial = paramatroFechaRegistroInicial;
 		}
 
-		public Date getParamatroFechaRegistroFinal() {
-			return paramatroFechaRegistroFinal;
+		public Date getParametroFechaRegistroFinal() {
+			return parametroFechaRegistroFinal;
 		}
 
-		public void setParamatroFechaRegistroFinal(Date paramatroFechaRegistroFinal) {
-			this.paramatroFechaRegistroFinal = paramatroFechaRegistroFinal;
+		public void setParametroFechaRegistroFinal(Date paramatroFechaRegistroFinal) {
+			this.parametroFechaRegistroFinal = paramatroFechaRegistroFinal;
 		}
 
 		

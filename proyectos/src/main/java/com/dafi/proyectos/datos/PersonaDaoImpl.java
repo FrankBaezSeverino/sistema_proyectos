@@ -17,6 +17,10 @@ public class PersonaDaoImpl implements PersonaDao {
 
     @PersistenceContext(unitName="proyectos")
     EntityManager em;
+    
+    private CriteriaBuilder criteriaBuilder;  
+    private CriteriaQuery criteriaQuery ;
+    private Root<Persona> rootPersona;
 	
     @Override
 	public List<Persona> findAllPersonas() throws Exception{
@@ -62,17 +66,16 @@ public class PersonaDaoImpl implements PersonaDao {
 
 	@Override
 	public List<Persona> findPersonas(Persona persona) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+	       Query query = em.createQuery("from Persona p where p.idPersona =:idPersona");
+	        query.setParameter("idPersona", persona.getIdPersona());
+	        return (List<Persona>) query.getResultList();
 	}
 
 
 	@Override
 	public List<Persona> findPersonas(List<Predicate> criterios) throws Exception{
 	 
-	    CriteriaBuilder qb = em.getCriteriaBuilder();
-	    CriteriaQuery cq = qb.createQuery();
-	    Root<Persona> persona = cq.from(Persona.class);
+
 	
 	    	    
 	    //List<Predicate> predicates = new ArrayList<Predicate>();
@@ -100,9 +103,36 @@ public class PersonaDaoImpl implements PersonaDao {
 //	                qb.equal(persona.get("someOtherAttribute"), paramNull));
 //	    }
 	    //query itself
-	     cq.select(persona).where(criterios.toArray(new Predicate[]{}));
+		criteriaQuery.select(rootPersona).where(criterios.toArray(new Predicate[]{}));
 	    //execute query and do something with result
-	     return em.createQuery(cq).getResultList();
+	     return em.createQuery(criteriaQuery).getResultList();
 	}
 
+	@Override
+	public CriteriaBuilder getCriteriaBuilder() {
+		if (criteriaBuilder==null) {
+			criteriaBuilder = em.getCriteriaBuilder();
+		}		
+		return criteriaBuilder;
+	}
+
+	@Override
+	public CriteriaQuery getCriteriaQuery() {
+		if (criteriaQuery==null) { 
+			criteriaQuery = getCriteriaBuilder().createQuery();
+		}
+		return criteriaQuery;
+		
+	}
+
+	@Override
+	public Root<Persona> getRootPersona() {
+		if (rootPersona==null) {
+			rootPersona = getCriteriaQuery().from(Persona.class);
+		}
+		return rootPersona;
+	}
+
+	
+	
 }

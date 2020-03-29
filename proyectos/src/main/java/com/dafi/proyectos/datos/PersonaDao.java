@@ -2,7 +2,10 @@ package com.dafi.proyectos.datos;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import com.dafi.proyectos.modelo.Persona;
 
@@ -25,4 +28,11 @@ public interface PersonaDao {
     public void updatePersona(Persona persona) throws Exception;
     
     public void deletePersona(Persona persona) throws Exception;
+    
+	public CriteriaBuilder getCriteriaBuilder();
+
+	public CriteriaQuery getCriteriaQuery() ;
+
+	public Root<Persona> getRootPersona() ;
+
 }

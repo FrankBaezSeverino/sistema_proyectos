@@ -7,7 +7,10 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import com.dafi.proyectos.datos.PersonaDao;
 import com.dafi.proyectos.modelo.Persona;
@@ -71,5 +74,20 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 	public void eliminarPersona(Persona persona) throws Exception{
 		   personaDao.deletePersona(persona);
 
+	}
+
+	@Override
+	public CriteriaBuilder getCriteriaBuilder() {		
+		return personaDao.getCriteriaBuilder();
+	}
+
+	@Override
+	public CriteriaQuery getCriteriaQuery() {
+		return personaDao.getCriteriaQuery();
+	}
+
+	@Override
+	public Root<Persona> getRootPersona() { 
+		return personaDao.getRootPersona();
 	}
 }

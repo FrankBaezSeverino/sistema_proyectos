@@ -22,11 +22,20 @@
         </p:ajaxStatus>
         
         <h:form id="form1">        
+         
             <p:growl id="messages" showDetail="false" life="3000"/>
             <p:messages/>
 
    			<p:commandButton value="Inicio" action="#{personaListaBean.inicio()}"  icon="fa fa-home" title="Inicio"/>
-   			<p:commandButton value="Crear" action="#{personaListaBean.crear()}"  icon="fa fa-file" title="Crear"/>        
+   			
+   			<p:commandButton value="Crear" action="#{personaListaBean.crear()}"  icon="fa fa-file" title="Crear"/>
+   			
+   			<p:commandButton 	value="Buscar" 
+   								action="#{personaListaBean.buscar()}"  
+   								icon="fa fa-binoculars" 
+   								title="buscar"
+   								ajax="true"
+   								update=":form1:messages,:form1:lista"/>        
 
     		<p:panel id="parametros" header="Parametros de Busqueda"  style="margin-bottom:5px">
         		<h:panelGrid columns="6" cellpadding="5" columnClasses="label, value" >
@@ -49,10 +58,10 @@
             			<p:inputMask id="telefono" value="#{personaListaBean.parametroTelefono}"  mask="(999) 999-9999" />
             			
             			<p:outputLabel for="fechaRegistroInicial" value="Fecha Registro Inical" />
-        				<p:calendar id="fechaRegistroInicial" value="#{personaListaBean.paramatroFechaRegistroInicial}" pattern="dd-MM-yyyy" mask="true"/>
+        				<p:calendar id="fechaRegistroInicial" value="#{personaListaBean.parametroFechaRegistroInicial}" pattern="dd-MM-yyyy" mask="true"/>
 
             			<p:outputLabel for="fechaRegistroFinal" value="Fecha Registro Final" />
-        				<p:calendar id="fechaRegistroFinal" value="#{personaListaBean.paramatroFechaRegistroFinal}" pattern="dd-MM-yyyy" mask="true"/>
+        				<p:calendar id="fechaRegistroFinal" value="#{personaListaBean.parametroFechaRegistroFinal}" pattern="dd-MM-yyyy" mask="true"/>
 
         		</h:panelGrid>
 
