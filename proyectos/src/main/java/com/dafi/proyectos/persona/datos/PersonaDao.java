@@ -2,6 +2,7 @@ package com.dafi.proyectos.persona.datos;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -33,6 +34,8 @@ public interface PersonaDao {
 
 	public CriteriaQuery getCriteriaQuery() ;
 
-	public Root<Persona> getRootPersona() ;
+	public Root<Persona> getRootPersona() ;	
+	
+	public EntityManager getEm();
 
 }

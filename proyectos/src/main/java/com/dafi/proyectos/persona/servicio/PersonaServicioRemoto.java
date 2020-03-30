@@ -3,6 +3,7 @@ package com.dafi.proyectos.persona.servicio;
 import java.util.List;
 
 import javax.ejb.Remote;
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -36,4 +37,6 @@ public interface PersonaServicioRemoto {
 		public CriteriaQuery getCriteriaQuery() ;
 
 		public Root<Persona> getRootPersona() ;
+		
+		public EntityManager getEm();
 }

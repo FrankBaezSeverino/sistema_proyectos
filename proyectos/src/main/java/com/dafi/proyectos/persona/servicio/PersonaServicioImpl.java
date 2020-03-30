@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -14,6 +15,8 @@ import javax.persistence.criteria.Root;
 
 import com.dafi.proyectos.persona.datos.PersonaDao;
 import com.dafi.proyectos.persona.modelo.Persona;
+import com.dafi.proyectos.persona.regla.calculo.ReglaCalculoActualizaFechaRegistro;
+import com.dafi.proyectos.persona.regla.valicion.ReglaValidaUnicoCorreoPorPersona;
 
 @Stateless
 public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemoto {
@@ -58,10 +61,15 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 	}
 
 	@Override
-	public void registrarPersona(Persona persona) throws Exception
+	public void registrarPersona(Persona persona) throws Exception 
 	{
-		persona.setFechaRegistro(new Date());
+		ReglaCalculoActualizaFechaRegistro regla1 = new ReglaCalculoActualizaFechaRegistro();
+		regla1.ejecutar(persona, this);
+
+		ReglaValidaUnicoCorreoPorPersona regla2 =new ReglaValidaUnicoCorreoPorPersona();
+		regla2.ejecutar(persona, this);
 	    personaDao.insertPersona(persona);
+	    
 	}
 
 	@Override
@@ -90,4 +98,11 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 	public Root<Persona> getRootPersona() { 
 		return personaDao.getRootPersona();
 	}
+
+	@Override
+	public EntityManager getEm() {		
+		return personaDao.getEm();
+	}
+	
+	
 }
