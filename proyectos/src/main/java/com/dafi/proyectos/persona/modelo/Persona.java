@@ -5,12 +5,19 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.dafi.proyectos.persona.regla.calculo.ReglaCalculoActualizaFechaRegistro;
+import com.dafi.proyectos.persona.regla.valicion.ReglaValidaUnicoCorreoPorPersona;
+
 
 /**
  * Entity implementation class for Entity: Persona
  *
  */
 @Entity
+@EntityListeners({	
+	ReglaValidaUnicoCorreoPorPersona.class,
+	ReglaCalculoActualizaFechaRegistro.class
+})
 @Table(name =  "PERSONA")
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),

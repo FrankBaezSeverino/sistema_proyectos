@@ -29,9 +29,7 @@
         </p:ajaxStatus>  
        
         <h:form id ="form" >
-            <p:growl id="messages" showDetail="false" life="3000" />          
-        
-          	           	  
+            <p:growl id="messages" showDetail="false" life="10000" style="text-align: center"/>           	           	  
               <p:outputPanel id="personaDetail" style="text-align: center" >
               		<h:inputHidden id="idPersona" value="#{personaBean.persona.idPersona}"/>
                     <p:panelGrid id="display" columns="6" columnClasses="label, value"  >

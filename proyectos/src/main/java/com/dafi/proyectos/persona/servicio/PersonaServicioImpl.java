@@ -15,8 +15,8 @@ import javax.persistence.criteria.Root;
 
 import com.dafi.proyectos.persona.datos.PersonaDao;
 import com.dafi.proyectos.persona.modelo.Persona;
-import com.dafi.proyectos.persona.regla.calculo.ReglaCalculoActualizaFechaRegistro;
-import com.dafi.proyectos.persona.regla.valicion.ReglaValidaUnicoCorreoPorPersona;
+import com.dafi.proyectos.util.MotorReglas;
+import com.dafi.proyectos.util.Operacion;
 
 @Stateless
 public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemoto {
@@ -63,11 +63,7 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 	@Override
 	public void registrarPersona(Persona persona) throws Exception 
 	{
-		ReglaCalculoActualizaFechaRegistro regla1 = new ReglaCalculoActualizaFechaRegistro();
-		regla1.ejecutar(persona, this);
-
-		ReglaValidaUnicoCorreoPorPersona regla2 =new ReglaValidaUnicoCorreoPorPersona();
-		regla2.ejecutar(persona, this);
+		MotorReglas.ejecutarReglas(persona, "com.dafi.proyectos.persona.regla",Persona.class,getEm() , Operacion.INSERTAR);
 	    personaDao.insertPersona(persona);
 	    
 	}
