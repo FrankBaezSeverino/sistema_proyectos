@@ -41,7 +41,7 @@ public class PersonaConverter implements Converter{
 	    @Override
 	    public String getAsString(FacesContext fc, UIComponent uic, Object object) {
 	        if(object != null) {
-	            return String.valueOf(((Persona) object).getIdPersona());
+	            return String.valueOf(((Persona) object).getId());
 	        }
 	        else {
 	            return null;

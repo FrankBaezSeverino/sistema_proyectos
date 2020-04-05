@@ -1,4 +1,4 @@
-package com.dafi.proyectos.persona.datos;
+package com.dafi.proyectos.proyecto.datos;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import javax.persistence.criteria.Root;
 
 import com.dafi.proyectos.persona.modelo.Persona;
 
-public interface PersonaDao {	
+public interface ProyectoDao {	
     
 	public List<Persona> findAllPersonas()  throws Exception;
 	
@@ -18,7 +18,7 @@ public interface PersonaDao {
 	
 	public List<Persona> findPersonas(List<Predicate> criterios)  throws Exception;
     
-    public Persona findPersonaById(Integer id) throws Exception;
+    public Persona findPersonaById(Integer idPersona) throws Exception;
     
     public Persona findPersonaById(Persona persona) throws Exception;
     

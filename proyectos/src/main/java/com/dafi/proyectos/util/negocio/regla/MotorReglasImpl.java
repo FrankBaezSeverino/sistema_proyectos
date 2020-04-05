@@ -1,28 +1,37 @@
-package com.dafi.proyectos.util;
+package com.dafi.proyectos.util.negocio.regla;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.ejb.Stateless;
+import javax.enterprise.inject.spi.Unmanaged;
+import javax.enterprise.inject.spi.Unmanaged.UnmanagedInstance;
 import javax.persistence.EntityManager;
 
 import org.reflections.Reflections;
-import com.dafi.proyectos.util.anotaciones.Regla;
 
-public class MotorReglas {
+import com.dafi.proyectos.persona.regla.calculo.ReglaCalculoActualizaFechaRegistro;
+import com.dafi.proyectos.util.negocio.modelo.Entidad;
+
+@Stateless
+public class MotorReglasImpl implements MotorReglas{
 	
-	public static void ejecutarReglas(	Object instanciaEntidad,
+	@Override
+	public  void ejecutarReglas(	Object instanciaEntidad,
 										String paquete, 
 										Class entidad,
 										 EntityManager em,
 										Operacion operacionEjecutada)  throws Exception{		
 
  	   
-		 List<Object> listaReglasCalculo= new ArrayList<Object>();
-         List<Object> listaReglasValidacion= new ArrayList<Object>();
-         List<Object> listaReglasAccion= new ArrayList<Object>();
+		 List<ReglaNegocio> listaReglasCalculo= new ArrayList<ReglaNegocio>();
+         List<ReglaNegocio> listaReglasValidacion= new ArrayList<ReglaNegocio>();
+         List<ReglaNegocio> listaReglasAccion= new ArrayList<ReglaNegocio>();
+         List<UnmanagedInstance<ReglaNegocio> > listaReglaNegocioInstance= new ArrayList<UnmanagedInstance<ReglaNegocio>>();
 		
         Reflections reflections = new Reflections(paquete);           
         
@@ -34,7 +43,17 @@ public class MotorReglas {
                                       
            if (anotacionRegla.claseEntidad()==entidad && isOperacion(anotacionRegla.operacion(), operacionEjecutada) )   {        	
         	   
-        	   Object reglaNegocio =  clase.newInstance();
+        	   Unmanaged<ReglaNegocio> unmanagedReglaNegocio= new Unmanaged(clase); 
+        	   UnmanagedInstance<ReglaNegocio> reglaNegocioInstance = unmanagedReglaNegocio.newInstance();
+        	   ReglaNegocio reglaNegocio = reglaNegocioInstance.produce().inject().postConstruct().get();
+      		   
+        	   reglaNegocioInstance.preDestroy().dispose();
+       		 // 	Constructor constructorSinParametros = clase.getConstructor();
+    			
+       		  //  ReglaNegocio  reglaNegocio = (ReglaNegocio) constructorSinParametros.newInstance();
+
+
+
         	   
         	   if (anotacionRegla.tipoRegla() ==TipoRegla.CALCULO) {
         		   listaReglasCalculo.add(reglaNegocio);
@@ -49,18 +68,21 @@ public class MotorReglas {
         ejecutarReglas( listaReglasCalculo, instanciaEntidad,entidad,em);
         ejecutarReglas( listaReglasValidacion, instanciaEntidad,entidad,em);
         ejecutarReglas( listaReglasAccion, instanciaEntidad,entidad,em);
+        
 		
+        
 	}
 	
 	
 
-	private static void ejecutarReglas(List<Object> listaReglas, Object instanciaEntidad, Class entidad,EntityManager em) throws Exception {
+	private  void ejecutarReglas(List<ReglaNegocio> listaReglas, Object instanciaEntidad, Class entidad,EntityManager em) throws Exception {
 		ordenarReglas(listaReglas);
 		try {
-			for (Object  reglaNegocio:listaReglas) {
+			for (ReglaNegocio  reglaNegocio:listaReglas) {
 			 
-					Method m = reglaNegocio.getClass().getMethod("ejecutar",entidad,EntityManager.class);
+					Method m = reglaNegocio.getClass().getMethod("ejecutar",Entidad.class,EntityManager.class);
 					m.invoke(reglaNegocio,instanciaEntidad,em);
+					
 			          
 			}
 		} catch (Exception e) {
@@ -71,8 +93,8 @@ public class MotorReglas {
 	}
 
 
-	private static void ordenarReglas(List<Object> listaReglasCalculo) {
-		Collections.sort(listaReglasCalculo, new Comparator() {
+	private  void ordenarReglas(List<ReglaNegocio> listaReglas) {
+		Collections.sort(listaReglas, new Comparator() {
 			@Override
 			public int compare(Object regla1, Object regla2) {
 				return new Integer(regla1.getClass().getAnnotation(Regla.class).orden()).compareTo(regla1.getClass().getAnnotation(Regla.class).orden());
@@ -83,7 +105,7 @@ public class MotorReglas {
 
 
 
-	private static boolean isOperacion(Operacion[] operacionesRegla, Operacion operacionEjecutada) {
+	private  boolean isOperacion(Operacion[] operacionesRegla, Operacion operacionEjecutada) {
 		
 		for (Operacion operacionRegla: operacionesRegla) {
 			if (operacionRegla==operacionEjecutada) {

@@ -1,4 +1,4 @@
-package com.dafi.proyectos.util;
+package com.dafi.proyectos.util.funciones;
 
 import java.util.Calendar;
 import java.util.Date;

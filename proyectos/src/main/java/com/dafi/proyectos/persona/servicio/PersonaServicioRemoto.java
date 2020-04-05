@@ -20,7 +20,7 @@ public interface PersonaServicioRemoto {
 	  
 	  public List<Persona> listarPersonas(List<Predicate> criterios) throws Exception;
 	    
-	    public Persona encontrarPersonaPorId(Integer idPersona) throws Exception;
+	    public Persona encontrarPersonaPorId(Integer id) throws Exception;
 	    
 	    public Persona encontrarPersonaPorId(Persona persona) throws Exception;
 	    

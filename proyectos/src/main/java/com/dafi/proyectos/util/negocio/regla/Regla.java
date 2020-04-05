@@ -1,11 +1,8 @@
-package com.dafi.proyectos.util.anotaciones;
+package com.dafi.proyectos.util.negocio.regla;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
-
-import com.dafi.proyectos.util.Operacion;
-import com.dafi.proyectos.util.TipoRegla;
 
 @Retention(RUNTIME)
 public @interface Regla {

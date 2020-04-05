@@ -14,8 +14,8 @@ import javax.persistence.criteria.Predicate;
 
 import com.dafi.proyectos.persona.modelo.Persona;
 import com.dafi.proyectos.persona.servicio.PersonaServicio;
-import com.dafi.proyectos.util.Fecha;
-import com.dafi.proyectos.util.Operacion;
+import com.dafi.proyectos.util.funciones.Fecha;
+import com.dafi.proyectos.util.negocio.regla.Operacion;
 
 @Named("personaListaBean")
 @javax.faces.view.ViewScoped
@@ -106,7 +106,7 @@ public class PersonaListaBean implements Serializable{
 	    
 
 	    public String editar(Persona personaSeleccionada){        
-		       return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getIdPersona()+"&operacion="+ Operacion.MODIFICAR.ordinal();
+		       return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getId()+"&operacion="+ Operacion.MODIFICAR.ordinal();
 	    }
 
 	    public String crear(){        
@@ -114,7 +114,7 @@ public class PersonaListaBean implements Serializable{
 	    }
 
 	    public String consultar(Persona personaSeleccionada){        
-	    	return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getIdPersona()+"&operacion="+ Operacion.CONSULTAR.ordinal();
+	    	return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getId()+"&operacion="+ Operacion.CONSULTAR.ordinal();
 	    }
 	    
 	    public String inicio(){        

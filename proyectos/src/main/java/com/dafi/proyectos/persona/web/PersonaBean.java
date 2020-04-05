@@ -13,7 +13,7 @@ import org.primefaces.PrimeFaces;
 
 import com.dafi.proyectos.persona.modelo.Persona;
 import com.dafi.proyectos.persona.servicio.PersonaServicio;
-import com.dafi.proyectos.util.Operacion;
+import com.dafi.proyectos.util.negocio.regla.Operacion;
 
 
 
@@ -56,7 +56,7 @@ public class PersonaBean  implements Serializable{
             	personaServicio.modificarPersona(persona);
             }
 		  	operacion=Operacion.MODIFICAR.ordinal();
-		  	id=persona.getIdPersona();
+		  	id=persona.getId();
 		  	
 			notificationSuccess( "Registro grabado satisfactoriamente");
 			

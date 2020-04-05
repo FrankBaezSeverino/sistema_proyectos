@@ -74,14 +74,14 @@
 						rows="5"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,15" 
-            			rowKey="#{persona.idPersona}" 
+            			rowKey="#{persona.id}" 
             			border="1" paginatorPosition="bottom">
                 <f:facet name="header">
                     Resultados busqueda
                 </f:facet>
                 
                 <p:column headerText="Id">
-                  	<h:outputText value="#{persona.idPersona}"/>
+                  	<h:outputText value="#{persona.id}"/>
                 </p:column>
                 
                 <p:column headerText="Nombre">                    

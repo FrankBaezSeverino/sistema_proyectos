@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 import com.dafi.proyectos.persona.regla.calculo.ReglaCalculoActualizaFechaRegistro;
 import com.dafi.proyectos.persona.regla.valicion.ReglaValidaUnicoCorreoPorPersona;
+import com.dafi.proyectos.util.negocio.modelo.Entidad;
 
 
 /**
@@ -14,18 +15,14 @@ import com.dafi.proyectos.persona.regla.valicion.ReglaValidaUnicoCorreoPorPerson
  *
  */
 @Entity
-@EntityListeners({	
-	ReglaValidaUnicoCorreoPorPersona.class,
-	ReglaCalculoActualizaFechaRegistro.class
-})
 @Table(name =  "PERSONA")
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
-    @NamedQuery(name = "Persona.findByIdPersona", query = "SELECT p FROM Persona p WHERE p.idPersona = :idPersona"),
+    @NamedQuery(name = "Persona.findByIdPersona", query = "SELECT p FROM Persona p WHERE p.id = :idPersona"),
     @NamedQuery(name = "Persona.findByNombre", query = "SELECT p FROM Persona p WHERE p.nombre = :nombre"),    
     @NamedQuery(name = "Persona.findByCorreo", query = "SELECT p FROM Persona p WHERE p.correo = :corre"),
     @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono")})
-public class Persona implements Serializable {
+public class Persona implements Serializable, Entidad {
 
 	
 	private static final long serialVersionUID = 1L;
@@ -34,7 +31,7 @@ public class Persona implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID_PERSONA")
-    private Integer idPersona;
+    private Integer id;
 	
 	@Column(name = "FECHA_REGISTRO", nullable = true)
 	private Date fechaRegistro;
@@ -63,14 +60,14 @@ public class Persona implements Serializable {
 		super();
 	}
     
-    public Integer getIdPersona() {
-		return idPersona;
+    public Integer getId() {
+		return id;
 	}
    
 
 
-	public void setIdPersona(Integer idPersona) {
-		this.idPersona = idPersona;
+	public void setId(Integer id) {
+		this.id= id;
 	}
 
 

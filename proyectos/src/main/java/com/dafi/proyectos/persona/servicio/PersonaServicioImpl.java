@@ -1,6 +1,5 @@
 package com.dafi.proyectos.persona.servicio;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,14 +14,17 @@ import javax.persistence.criteria.Root;
 
 import com.dafi.proyectos.persona.datos.PersonaDao;
 import com.dafi.proyectos.persona.modelo.Persona;
-import com.dafi.proyectos.util.MotorReglas;
-import com.dafi.proyectos.util.Operacion;
+import com.dafi.proyectos.util.negocio.regla.MotorReglas;
+import com.dafi.proyectos.util.negocio.regla.Operacion;
 
 @Stateless
 public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemoto {
 	
 	@Inject
     private PersonaDao personaDao;
+	
+	@Inject
+    private MotorReglas motorReglas;
 	
     @Resource
     private SessionContext contexto;
@@ -44,13 +46,13 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 
 
 	@Override
-	public Persona encontrarPersonaPorId(Integer idPersona) throws Exception{
-		 return personaDao.findPersonaById(idPersona);
+	public Persona encontrarPersonaPorId(Integer id) throws Exception{
+		 return personaDao.findPersonaById(id);
 	}
 	
 	@Override
 	public Persona encontrarPersonaPorId(Persona persona) throws Exception{
-		 return personaDao.findPersonaById(persona.getIdPersona());
+		 return personaDao.findPersonaById(persona.getId());
 		 
 
 	}
@@ -63,7 +65,7 @@ public class PersonaServicioImpl implements PersonaServicio, PersonaServicioRemo
 	@Override
 	public void registrarPersona(Persona persona) throws Exception 
 	{
-		MotorReglas.ejecutarReglas(persona, "com.dafi.proyectos.persona.regla",Persona.class,getEm() , Operacion.INSERTAR);
+		motorReglas.ejecutarReglas(persona, "com.dafi.proyectos.persona.regla",Persona.class,getEm() , Operacion.INSERTAR);
 	    personaDao.insertPersona(persona);
 	    
 	}

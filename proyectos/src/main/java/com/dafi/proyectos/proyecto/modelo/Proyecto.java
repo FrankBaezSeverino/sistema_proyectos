@@ -37,30 +37,8 @@ public class Proyecto implements Serializable {
 	
     @Column(name = "OBJETIVO", nullable = true,length = 1000)
     private String objetivo;
-		
-	@Lob
-	@Column(name = "ANEXO_ACTA_CONSTITUCION", nullable = true)
-	private byte[] anexoActaConstitucion;
-	
-	
-	@Column(name = "ENLACE_BACKLOG", nullable = true,length = 1000)
-	private String enlacebacklog;
-	
-	@Column(name = "ENLACE_SPRINT_ACTIVO", nullable = true,length = 1000)
-	private String enlaceSprintActivo;
-	
-	@Column(name = "ENLACE_CRONOGRAMA", nullable = true,length = 1000)
-	private String enlaceCronograma;
-	
-	@Column(name = "ENLACE_MATRIZ_REQUERIMIENTOS", nullable = true,length = 1000)
-	private String enlaceMatrizRequerimientos;
-	
-	@Column(name = "ENLACE_GRAFICO_TRABAJO_PENDIENTE", nullable = true,length = 1000)
-	private String enlaceGraficoTrabajoPendienteSprintActivo;
-	
-	@Column(name = "ENLACE_GRAFICO_AVENCE_SPRINT", nullable = true,length = 1000)
-	private String enlaceGraficoAvanceSprint;
-		
+
+			
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "ID_ESTADO", nullable = false)
     private EstadoProyecto estado;
@@ -73,17 +51,7 @@ public class Proyecto implements Serializable {
     @Column(name = "FECHA_REGISTRO", nullable = true)
     private LocalDate fechaRegistro;
     
-	@Lob
-	@Column(name = "ANEXO_ACTA_CIERRE")
-	private byte[] anexoActaCierre;
 
-	@Lob
-	@Column(name = "ANEXO_ESPECIFICACION_NEGOCIO")
-	private byte[] anexoEspecificacionNegocio;
-
-	@Lob
-	@Column(name = "ANEXO_ESPECIFICACION_TECNICA")
-	private byte[] anexoEspecificacionTecnica;
 
 	@ManyToOne
 	@JoinColumn(name="ID_PERSONA_LIDER")
@@ -158,61 +126,6 @@ public class Proyecto implements Serializable {
 		this.objetivo = objetivo;
 	}
 
-	public byte[] getAnexoActaConstitucion() {
-		return anexoActaConstitucion;
-	}
-
-	public void setAnexoActaConstitucion(byte[] anexoActaConstitucion) {
-		this.anexoActaConstitucion = anexoActaConstitucion;
-	}
-
-	public String getEnlacebacklog() {
-		return enlacebacklog;
-	}
-
-	public void setEnlacebacklog(String enlacebacklog) {
-		this.enlacebacklog = enlacebacklog;
-	}
-
-	public String getEnlaceSprintActivo() {
-		return enlaceSprintActivo;
-	}
-
-	public void setEnlaceSprintActivo(String enlaceSprintActivo) {
-		this.enlaceSprintActivo = enlaceSprintActivo;
-	}
-
-	public String getEnlaceCronograma() {
-		return enlaceCronograma;
-	}
-
-	public void setEnlaceCronograma(String enlaceCronograma) {
-		this.enlaceCronograma = enlaceCronograma;
-	}
-
-	public String getEnlaceMatrizRequerimientos() {
-		return enlaceMatrizRequerimientos;
-	}
-
-	public void setEnlaceMatrizRequerimientos(String enlaceMatrizRequerimientos) {
-		this.enlaceMatrizRequerimientos = enlaceMatrizRequerimientos;
-	}
-
-	public String getEnlaceGraficoTrabajoPendienteSprintActivo() {
-		return enlaceGraficoTrabajoPendienteSprintActivo;
-	}
-
-	public void setEnlaceGraficoTrabajoPendienteSprintActivo(String enlaceGraficoTrabajoPendienteSprintActivo) {
-		this.enlaceGraficoTrabajoPendienteSprintActivo = enlaceGraficoTrabajoPendienteSprintActivo;
-	}
-
-	public String getEnlaceGraficoAvanceSprint() {
-		return enlaceGraficoAvanceSprint;
-	}
-
-	public void setEnlaceGraficoAvanceSprint(String enlaceGraficoAvanceSprint) {
-		this.enlaceGraficoAvanceSprint = enlaceGraficoAvanceSprint;
-	}
 
 	public EstadoProyecto getEstado() {
 		return estado;
@@ -238,29 +151,7 @@ public class Proyecto implements Serializable {
 		this.fechaRegistro = fechaRegistro;
 	}
 
-	public byte[] getAnexoActaCierre() {
-		return anexoActaCierre;
-	}
 
-	public void setAnexoActaCierre(byte[] anexoActaCierre) {
-		this.anexoActaCierre = anexoActaCierre;
-	}
-
-	public byte[] getAnexoEspecificacionNegocio() {
-		return anexoEspecificacionNegocio;
-	}
-
-	public void setAnexoEspecificacionNegocio(byte[] anexoEspecificacionNegocio) {
-		this.anexoEspecificacionNegocio = anexoEspecificacionNegocio;
-	}
-
-	public byte[] getAnexoEspecificacionTecnica() {
-		return anexoEspecificacionTecnica;
-	}
-
-	public void setAnexoEspecificacionTecnica(byte[] anexoEspecificacionTecnica) {
-		this.anexoEspecificacionTecnica = anexoEspecificacionTecnica;
-	}
 
 	public Persona getLider() {
 		return lider;

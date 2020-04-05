@@ -1,4 +1,4 @@
-package com.dafi.proyectos.persona.datos;
+package com.dafi.proyectos.proyecto.datos;
 
 
 import java.util.List;
@@ -14,7 +14,7 @@ import com.dafi.proyectos.persona.modelo.Persona;
 import javax.persistence.*;
 
 @Stateless
-public class PersonaDaoImpl implements PersonaDao {
+public class ProyectoDaoImpl implements ProyectoDao {
 
     @PersistenceContext(unitName="proyectos")
     EntityManager em;
@@ -30,8 +30,8 @@ public class PersonaDaoImpl implements PersonaDao {
          
 
 	@Override
-	public Persona findPersonaById(Integer id) throws Exception{
-		 return em.find(Persona.class, id);
+	public Persona findPersonaById(Integer idPersona) throws Exception{
+		 return em.find(Persona.class, idPersona);
 	}
 
 	@Override
