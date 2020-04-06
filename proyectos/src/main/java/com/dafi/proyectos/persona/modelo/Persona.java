@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
 import com.dafi.proyectos.persona.regla.calculo.ReglaCalculoActualizaFechaRegistro;
 import com.dafi.proyectos.persona.regla.valicion.ReglaValidaUnicoCorreoPorPersona;
 import com.dafi.proyectos.util.negocio.modelo.Entidad;
+
 
 
 /**
@@ -22,6 +24,8 @@ import com.dafi.proyectos.util.negocio.modelo.Entidad;
     @NamedQuery(name = "Persona.findByNombre", query = "SELECT p FROM Persona p WHERE p.nombre = :nombre"),    
     @NamedQuery(name = "Persona.findByCorreo", query = "SELECT p FROM Persona p WHERE p.correo = :corre"),
     @NamedQuery(name = "Persona.findByTelefono", query = "SELECT p FROM Persona p WHERE p.telefono = :telefono")})
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Persona implements Serializable, Entidad {
 
 	
