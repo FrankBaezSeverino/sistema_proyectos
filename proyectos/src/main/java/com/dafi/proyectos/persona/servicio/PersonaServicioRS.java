@@ -27,7 +27,7 @@ public class PersonaServicioRS {
 	
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/encontrarPorId/{id}")
+    @Path("/encontrar/{id}")
     public Persona encontrarPersonaPorId(@PathParam("id") int id) throws Exception {
     		return personaServicio.encontrarPersonaPorId(id);
     }
@@ -36,7 +36,7 @@ public class PersonaServicioRS {
     @POST
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/registar")
+    @Path("/registrar")
     public Response agregarPersona(Persona persona) {
         try {
         	personaServicio.registrarPersona(persona);
