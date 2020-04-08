@@ -63,6 +63,11 @@ public class Prueba implements Entidad, Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	@Override	
+	public String getDescripcionEntidad() { 
+		return nombre;
+	}
 	
 	
 	

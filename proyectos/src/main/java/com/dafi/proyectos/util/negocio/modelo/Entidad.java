@@ -4,5 +4,5 @@ public interface Entidad {
 	
 	public Integer getId();
 	public void setId(Integer id) ;
-
+	public String getDescripcionEntidad();
 }

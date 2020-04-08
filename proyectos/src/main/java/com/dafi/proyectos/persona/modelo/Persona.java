@@ -112,6 +112,11 @@ public class Persona implements Serializable, Entidad {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	@Override
+	public String getDescripcionEntidad() {
+		return nombre;
 	}    
 
 
