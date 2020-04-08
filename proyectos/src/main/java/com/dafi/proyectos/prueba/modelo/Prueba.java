@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.dafi.proyectos.util.negocio.modelo.Entidad;
 
@@ -20,6 +23,8 @@ import com.dafi.proyectos.util.negocio.modelo.Entidad;
     @NamedQuery(name = "Prueba.findAll", query = "SELECT p FROM Prueba p"),
     @NamedQuery(name = "Prueba.findById", query = "SELECT p FROM Prueba p WHERE p.id = :id"),
     @NamedQuery(name = "Prueba.findByNombre", query = "SELECT p FROM Prueba p WHERE p.nombre = :nombre")})
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 public class Prueba implements Entidad, Serializable {
 
 	/**
