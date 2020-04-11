@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Registro de Persona Contacto</title>
+    </h:head>
+    <h:body>      
+        <p:ajaxStatus style="width: 16px;height: 16px;" id="ajaxStatusPanel">
+            <f:facet name="start">
+                <h:graphicImage library="images" name="ajaxloading.gif" />
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>  
+       
+        <h:form id ="form" >
+            <p:growl id="messages" showDetail="false" life="10000" style="text-align: center"/>                       	           	  
+              <p:outputPanel id="personaDetail" style="text-align: center" >
+              		<h:inputHidden id="id" value="#{personaContactoBean.personaContacto.id}"/>
+                    <p:panelGrid id="display" columns="6" columnClasses="label, value"  >
+                      	 <f:facet name="header" >
+  						 	Registro de Personas Contactos
+            			</f:facet>
+            			 <p:tabView> 
+            			 	<p:tab title="Datos Generales">           			
+            					<p:outputLabel for="nombre" value="Name"/>
+            					<p:inputText id="nombre" value="#{personaContactoBean.personaContacto.nombre}" required="true"
+            			 		requiredMessage="Por favor entre su nombre." disabled="#{personaContactoBean.isOperacionConsultar()}"/>
+            			 		<p:message for="nombre" />
+        						
+ 						 	</p:tab>
+					 	</p:tabView>	           				
+        				<f:facet name="footer">
+							<p:commandButton 	value="Retornar" 
+												action="#{personaContactoBean.retornar()}" 
+												ajax="false"  immediate="true" 
+												style="margin-right:5px;"  
+												icon="fa fa-arrow-circle-left" title="Retornar"/>
+							
+						    <p:commandButton value="Crear" 
+						    				action="#{personaContactoBean.crear()}" 
+						    				ajax="false"  immediate="true" 
+						    				style="margin-right:5px;"  icon="fa fa-file" title="Crear"/>
+            
+            
+                        	<p:commandButton value="Cancelar" action="#{personaContactoBean.cancelar()}" 
+                        					immediate="true" ajax="true" style="margin-right:5px;"  
+                        					icon="fa fa-ban" title="Cancelar" 
+                        					update=":form:messages,:form:personaDetail"
+                        					disabled="#{personaContactoBean.isDesahabilitarBotonCancelar()}">
+                				<p:resetInput target="personaDetail" />
+            				</p:commandButton>				
+      
+   							<p:commandButton 		value="Eliminar" 
+   							 						update=":form:personaDetail" oncomplete="PF('confirmDeleteDlg').show()"   													 
+   													ajax="true" immediate="true" style="margin-right:5px;"  
+   													icon="fa fa-trash" title="Eliminar" 
+   													disabled="#{personaContactoBean.isDesahabilitarBotonEliminar()}"/>         
+            				
+            				<p:commandButton 	value="Grabar" 
+            									action="#{personaContactoBean.grabar()}" 
+            									ajax="true" style="margin-right:5px;"  
+            									icon="fa fa-floppy-o" title="Grabar" 
+            									update=":form:messages,:form:personaDetail"
+            									disabled="#{personaContactoBean.isDesahabilitarBotonGrabar()}" />
+            			</f:facet>
+                   	</p:panelGrid>
+          	</p:outputPanel>
+          	
+          	
+          	<p:dialog header="Confirmar Eliminar" widgetVar="confirmDeleteDlg"
+					resizable="false" width="700" height="120" showEffect="clip"
+					hideEffect="clip" modal="true">
+         			
+         			<p:outputPanel layout="block" style="text-align:center" >
+								
+							<br></br>
+							
+							<h:outputText value="Seguro que desea eliminar el registro" /> 
+							<br></br>
+							<br></br>	
+							
+
+						<p:commandButton value="Si"
+							update=":form:messages,:form:personaDetail"
+							action="#{personaContactoBean.eliminar()}"
+							oncomplete="PF('confirmDeleteDlg').hide()" />
+						<p:commandButton value="No" onclick="PF('confirmDeleteDlg').hide()"	type="button" />
+					</p:outputPanel>
+ 		
+			</p:dialog>
+          	
+        </h:form>
+    </h:body>
+</html>

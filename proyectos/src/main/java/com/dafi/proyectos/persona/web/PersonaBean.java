@@ -12,6 +12,7 @@ import javax.inject.Named;
 import org.primefaces.PrimeFaces;
 
 import com.dafi.proyectos.persona.modelo.Persona;
+import com.dafi.proyectos.persona.modelo.PersonaContacto;
 import com.dafi.proyectos.persona.servicio.PersonaServicio;
 import com.dafi.proyectos.util.negocio.regla.Operacion;
 
@@ -31,6 +32,7 @@ public class PersonaBean  implements Serializable{
     private PersonaServicio personaServicio;
     
     private Persona persona;
+    private PersonaContacto personaContactoSeleccionada;
     
     private Integer id;    
 
@@ -183,5 +185,48 @@ public class PersonaBean  implements Serializable{
 			return "false";
 		}	
 	}
+	
+    public String editarPersonaContato(PersonaContacto personaContactoSeleccionada){
+    	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("personaContactoSeleccionada", personaContactoSeleccionada);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.MODIFICAR.ordinal());
+        
+        return "/persona/personacontacto/personacontacto?faces-redirect=true";    	
+
+    }
+
+    public String crearPersonaContacto(){    	
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.INSERTAR.ordinal());
+    	return "/persona/personacontacto/personacontacto?faces-redirect=true";
+    }
+
+    public String consultarPersonaContato(PersonaContacto personaContactoSeleccionada){
+    	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("personaContactoSeleccionada", personaContactoSeleccionada);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.CONSULTAR.ordinal());
+    	return "/persona/personacontacto/personacontacto?faces-redirect=true";
+
+    }
+    
+    public void eliminarPersonaContacto(PersonaContacto personaContactoSeleccionada){
+ 
+    	personaContactoSeleccionada.setPersona(persona);
+    	persona.getContactos().remove(personaContactoSeleccionada);
+    	personaContactoSeleccionada.setPersona(null);    	
+    	notificationSuccess("Registro eliminado con exito");
+    	
+    }
+
+
+	public PersonaContacto getPersonaContactoSeleccionada() {
+		return personaContactoSeleccionada;
+	}
+
+
+	public void setPersonaContactoSeleccionada(PersonaContacto personaContactoSeleccionada) {
+		this.personaContactoSeleccionada = personaContactoSeleccionada;
+	}
+
 
 }

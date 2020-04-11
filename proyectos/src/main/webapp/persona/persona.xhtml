@@ -29,38 +29,77 @@
         </p:ajaxStatus>  
        
         <h:form id ="form" >
-            <p:growl id="messages" showDetail="false" life="10000" style="text-align: center"/>           	           	  
+            <p:growl id="messages" showDetail="false" life="10000" style="text-align: center"/>                       	           	  
               <p:outputPanel id="personaDetail" style="text-align: center" >
               		<h:inputHidden id="id" value="#{personaBean.persona.id}"/>
                     <p:panelGrid id="display" columns="6" columnClasses="label, value"  >
                       	 <f:facet name="header" >
   						 	Registro de Personas
-            			</f:facet>            			
-            			<p:outputLabel for="nombre" value="Name"/>
-            			<p:inputText id="nombre" value="#{personaBean.persona.nombre}" required="true"
-            			 requiredMessage="Por favor entre su nombre." disabled="#{personaBean.isOperacionConsultar()}"/>
-            			 <p:message for="nombre" />
+            			</f:facet>
+            			 <p:tabView> 
+            			 	<p:tab title="Datos Generales">           			
+            					<p:outputLabel for="nombre" value="Name"/>
+            					<p:inputText id="nombre" value="#{personaBean.persona.nombre}" required="true"
+            			 		requiredMessage="Por favor entre su nombre." disabled="#{personaBean.isOperacionConsultar()}"/>
+            			 		<p:message for="nombre" />
                         			
-            			<p:outputLabel for="correo" value="Correo"/>
-            			<p:inputText id="correo" required="true"
+            					<p:outputLabel for="correo" value="Correo"/>
+            					<p:inputText id="correo" required="true"
             						value="#{personaBean.persona.correo}"
             						validatorMessage="Formato de correo invalido."
             						requiredMessage="Por favor entre su correo." disabled="#{personaBean.isOperacionConsultar()}">
-            			  <f:validateRegex
-							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-						</p:inputText>
-            			<p:message for="correo" />
+            			  				<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+										</p:inputText>
+            					<p:message for="correo" />
             			
-            			<p:outputLabel for="telefono" value="Telefono"/>
-            			<p:inputMask id="telefono" value="#{personaBean.persona.telefono}"  mask="(999) 999-9999" disabled="#{personaBean.isOperacionConsultar()}"/>
-            			<p:message for="telefono" />
+            					<p:outputLabel for="telefono" value="Telefono"/>
+            					<p:inputMask id="telefono" value="#{personaBean.persona.telefono}"  mask="(999) 999-9999" disabled="#{personaBean.isOperacionConsultar()}"/>
+            					<p:message for="telefono" />
             			
             			
             			
-            			<p:outputLabel for="fechaRegistro" value="Fecha Registro" />
-        				<p:calendar id="fechaRegistro" value="#{personaBean.persona.fechaRegistro}" pattern="dd-MM-yyyy" mask="true" disabled="true"/>
-        				<p:message for="fechaRegistro" />
-        				
+            					<p:outputLabel for="fechaRegistro" value="Fecha Registro" />
+        						<p:calendar id="fechaRegistro" value="#{personaBean.persona.fechaRegistro}" pattern="dd-MM-yyyy" mask="true" disabled="true"/>
+        						<p:message for="fechaRegistro" />
+        						
+ 						 	</p:tab>
+ 							<p:tab title="Contactos">
+		 						<p:dataTable id="lista" value="#{personaBean.persona.contactos}" var="personaContacto"  
+			            			selection="#{personaBean.personaContactoSeleccionada}" selectionMode="single" 
+			            			editable="true" paginator="true"
+									rows="5"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="5,10,15" 
+			            			rowKey="#{personaBean.id}" 
+			            			border="1" paginatorPosition="bottom">
+					                <f:facet name="header">
+					                    Contactos
+					                </f:facet>
+					                
+					                <p:column headerText="Id">
+					                  	<h:outputText value="#{personaContacto.id}"/>
+					                </p:column>
+					                
+					                <p:column headerText="Nombre">                    
+					                    <h:outputText value="#{personaContacto.nombre}"/>
+					                </p:column>
+		                
+		                
+					                <p:column>
+					                    <f:facet name="header">Acciones</f:facet>
+					                
+					                    <p:commandButton   action="#{personaBean.editarPersonaContato(personaContacto)}"  icon="fa fa-pencil" title="Editar"/>        
+					                   
+					                    <p:commandButton   action="#{personaBean.editarPersonaContato(personaContacto)}"	  icon="fa fa-trash" title="Eliminar"/>
+					                   
+					                    <p:commandButton   action="#{personaBean.eliminarPersonaContacto(personaContacto)}"  icon="fa fa-eye"  title="Consultar"/>                    
+					                
+					                </p:column>
+		
+		            			</p:dataTable>
+ 							</p:tab>   
+ 						 </p:tabView>	           				
         				<f:facet name="footer">
 							<p:commandButton 	value="Retornar" 
 												action="#{personaBean.retornar()}" 

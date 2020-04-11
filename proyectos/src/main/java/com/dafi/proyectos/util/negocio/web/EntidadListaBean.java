@@ -1,6 +1,7 @@
 package com.dafi.proyectos.util.negocio.web;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -12,7 +13,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.criteria.Predicate;
-
 
 
 import com.dafi.proyectos.util.negocio.datos.EntidadDao;
@@ -29,8 +29,9 @@ public abstract class EntidadListaBean<E> implements Serializable{
 
 	
 		protected abstract EntidadDao<E> getEntidadServico();
+		protected abstract E getEntidadCriterios();
 	
-		protected abstract void cargarParametros();
+		
 	    
 	    private List<E> entidades;
 	    
@@ -42,6 +43,8 @@ public abstract class EntidadListaBean<E> implements Serializable{
 	    
 	    
 	    protected E parametroEntidad;
+	    
+	    protected E criteriosEntidad;
 
 	    protected List<Predicate> criterios = new ArrayList<Predicate>();
 	    
@@ -51,6 +54,27 @@ public abstract class EntidadListaBean<E> implements Serializable{
 	    @PostConstruct
 	    public void inicializar(){
 	    	cargarLista();
+	    }
+	    
+	    
+	    protected  void cargarParametros() {
+	    	try { 
+	    	
+	    		Field[] campos = getEntityClass().getFields();
+	    	
+	    		for(Field campo: campos) {
+	    			Object value = campo.get(getEntidadCriterios());
+	    			if (value!=null) {
+	    				criterios.add(getEntidadServico().getCriteriaBuilder().equal(getEntidadServico().getRoot().get(campo.getName()), value));
+	    			}	    		
+	    		
+	    		}
+	    	} catch (Exception e) {
+				notificationError(e);
+				e.printStackTrace();		
+			}	
+	    	
+   
 	    }
 	    
 		protected String getRutaEdicion() {

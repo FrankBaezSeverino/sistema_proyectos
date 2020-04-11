@@ -2,12 +2,14 @@ package com.dafi.proyectos.persona.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
 import com.dafi.proyectos.persona.regla.calculo.ReglaCalculoActualizaFechaRegistro;
 import com.dafi.proyectos.persona.regla.valicion.ReglaValidaUnicoCorreoPorPersona;
+import com.dafi.proyectos.proyecto.modelo.ImpedimentoProyecto;
 import com.dafi.proyectos.util.negocio.modelo.Entidad;
 
 
@@ -50,6 +52,13 @@ public class Persona implements Serializable, Entidad {
     @Column(name = "TELEFONO", nullable = true,length = 30)
     private String telefono;
     
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+    private List<PersonaContacto>  contactos;
+    
+	
+	
+	
 	public Date getFechaRegistro() {
 		return fechaRegistro;
 	}
@@ -57,6 +66,7 @@ public class Persona implements Serializable, Entidad {
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
+
 
 
 	
@@ -117,7 +127,17 @@ public class Persona implements Serializable, Entidad {
 	@Override
 	public String getDescripcionEntidad() {
 		return nombre;
+	}
+
+	public List<PersonaContacto> getContactos() {
+		return contactos;
+	}
+
+	public void setContactos(List<PersonaContacto> contactos) {
+		this.contactos = contactos;
 	}    
 
+	
+	
 
 }
