@@ -67,7 +67,7 @@ public class PersonaDaoImpl implements PersonaDao {
 
 	@Override
 	public List<Persona> findPersonas(Persona persona) throws Exception{
-	       Query query = em.createQuery("from Persona p where p.idPersona =:idPersona");
+	       Query query = em.createQuery("from Persona p where p.id =:idPersona");
 	        query.setParameter("idPersona", persona.getId());
 	        return (List<Persona>) query.getResultList();
 	}

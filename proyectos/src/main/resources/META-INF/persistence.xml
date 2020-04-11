@@ -3,6 +3,7 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/proyectosDS</jta-data-source>
         <class>com.dafi.proyectos.persona.modelo.Persona</class>
+        <class>com.dafi.proyectos.persona.modelo.PersonaContacto</class>
         <class>com.dafi.proyectos.prueba.modelo.Prueba</class>       
         <shared-cache-mode>NONE</shared-cache-mode> <!-- test design time and deployment of JPA 2.0 -->
         <properties>

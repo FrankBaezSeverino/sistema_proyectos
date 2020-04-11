@@ -96,6 +96,9 @@
 					                    <p:commandButton   action="#{personaBean.eliminarPersonaContacto(personaContacto)}"  icon="fa fa-eye"  title="Consultar"/>                    
 					                
 					                </p:column>
+					                <f:facet name="footer">
+					                   	<p:commandButton value="Crear" action="#{personaBean.crearPersonaContacto()}"  icon="fa fa-file" title="Crear"/>
+					                </f:facet>
 		
 		            			</p:dataTable>
  							</p:tab>   
