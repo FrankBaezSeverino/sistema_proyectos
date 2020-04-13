@@ -25,12 +25,14 @@ public class PersonaContactoBean implements Serializable{
     private PersonaContacto personaContacto;
     private Persona persona;
     private Integer operacion ;
+    private Integer operacionMaestro ;
     
     @PostConstruct
     public void init() {
-        persona = (Persona) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("persona");
-        personaContacto = (PersonaContacto) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("personaContacto");
+        persona = (Persona) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("maestro");
+        personaContacto = (PersonaContacto) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("detalle");
         operacion = (Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("operacion");
+        operacionMaestro = (Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("operacionMaestro");
         if (personaContacto == null) {
         	personaContacto = new PersonaContacto();
       //  	isNuevo = true;
@@ -72,12 +74,16 @@ public class PersonaContactoBean implements Serializable{
 	
 	public String retornar() {	
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", operacionMaestro);
 			return "/persona/persona?faces-redirect=true";
 	}
 	
     
     public String crear(){        
-	       return "/persona/persona?faces-redirect=true&id=0&operacion=" + Operacion.INSERTAR.ordinal();
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.INSERTAR.ordinal());
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacionMaestro", operacionMaestro);
+    	return "/persona/personacontacto/personacontacto?faces-redirect=true";
     }
     
     public PersonaContacto getPersonaContacto() {

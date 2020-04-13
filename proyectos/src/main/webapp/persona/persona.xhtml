@@ -7,15 +7,6 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Registro de Persona</title>
-        <f:metadata>
-            <f:viewParam name="id"
-                         value="#{personaBean.id}"
-                         converter="javax.faces.Integer"/>
-             <f:viewParam name="operacion"
-                         value="#{personaBean.operacion}"
-                         converter="javax.faces.Integer"/>
-            <f:viewAction action="#{personaBean.cargarPersona()}"/>
-        </f:metadata>
     </h:head>
     <h:body>      
         <p:ajaxStatus style="width: 16px;height: 16px;" id="ajaxStatusPanel">
@@ -66,13 +57,12 @@
  						 	</p:tab>
  							<p:tab title="Contactos">
 		 						<p:dataTable id="lista" value="#{personaBean.persona.contactos}" var="personaContacto"  
-			            			selection="#{personaBean.personaContactoSeleccionada}" selectionMode="single" 
-			            			editable="true" paginator="true"
+			            			paginator="true"
 									rows="5"
 									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-									rowsPerPageTemplate="5,10,15" 
-			            			rowKey="#{personaBean.id}" 
-			            			border="1" paginatorPosition="bottom">
+									rowsPerPageTemplate="5,10,15"			            			 
+			            			border="1" 
+			            			paginatorPosition="bottom">
 					                <f:facet name="header">
 					                    Contactos
 					                </f:facet>
@@ -91,9 +81,14 @@
 					                
 					                    <p:commandButton   action="#{personaBean.editarPersonaContato(personaContacto)}"  icon="fa fa-pencil" title="Editar"/>        
 					                   
-					                    <p:commandButton   action="#{personaBean.editarPersonaContato(personaContacto)}"	  icon="fa fa-trash" title="Eliminar"/>
+					                    <p:commandButton   	action="#{personaBean.eliminarPersonaContacto(personaContacto)}"	  
+					                    					icon="fa fa-trash" 
+					                    					title="Eliminar"
+					                    					immediate="true" 
+					                    					ajax="true" 
+                        									update=":form:messages,:form:personaDetail"/>
 					                   
-					                    <p:commandButton   action="#{personaBean.eliminarPersonaContacto(personaContacto)}"  icon="fa fa-eye"  title="Consultar"/>                    
+					                    <p:commandButton   action="#{personaBean.consultarPersonaContato(personaContacto)}"  icon="fa fa-eye"  title="Consultar"/>                    
 					                
 					                </p:column>
 					                <f:facet name="footer">

@@ -9,11 +9,13 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.io.EndianUtils;
 import org.primefaces.PrimeFaces;
 
 import com.dafi.proyectos.persona.modelo.Persona;
 import com.dafi.proyectos.persona.modelo.PersonaContacto;
 import com.dafi.proyectos.persona.servicio.PersonaServicio;
+import com.dafi.proyectos.util.negocio.modelo.Entidad;
 import com.dafi.proyectos.util.negocio.regla.Operacion;
 
 
@@ -31,10 +33,7 @@ public class PersonaBean  implements Serializable{
 	@Inject
     private PersonaServicio personaServicio;
     
-    private Persona persona;
-    private PersonaContacto personaContactoSeleccionada;
-    
-    private Integer id;    
+    private Persona persona;   
 
 	private Integer operacion ;    
     
@@ -43,7 +42,9 @@ public class PersonaBean  implements Serializable{
     
     
     @PostConstruct
-    public void inicializar(){    	
+    public void inicializar(){   
+        persona = (Persona) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("persona");       
+        operacion = (Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("operacion");
     	if (persona==null) {
     		persona = new Persona();
     	}
@@ -58,15 +59,15 @@ public class PersonaBean  implements Serializable{
             	personaServicio.modificarPersona(persona);
             }
 		  	operacion=Operacion.MODIFICAR.ordinal();
-		  	id=persona.getId();
+		  	//id=persona.getId();
 		  	
 			notificationSuccess( "Registro grabado satisfactoriamente");
 			
-            //return "/persona/persona?faces-redirect=true& id="+persona.getIdPersona()+ "&operacion=" + Operacion.MODIFICAR.ordinal();
+           
 		} catch (Exception e) {
 			notificationError(e);
 			e.printStackTrace();
-			//return "/persona/persona?faces-redirect=true& id="+ id + "&operacion=" + operacion;
+			
 		}
     }
 	
@@ -84,35 +85,37 @@ public class PersonaBean  implements Serializable{
 	public void cancelar() {
 		PrimeFaces.current().resetInputs("form:personaDetail");
 		notificationSuccess( "Registro cancelado");
-          //return "/persona/personas?faces-redirect=true";
+        
 	}
 	
 	public String retornar() {	
           return "/persona/personas?faces-redirect=true";
 	}
 	
-    public String crear(){        
-	       return "/persona/persona?faces-redirect=true&id=0&operacion=" + Operacion.INSERTAR.ordinal();
+    public String crear(){
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.INSERTAR.ordinal());
+		return "/persona/persona?faces-redirect=true";
+	      //return "/persona/persona?faces-redirect=true&id=0&operacion=" + Operacion.INSERTAR.ordinal();
     }
 	
 	
     
-    public void cargarPersona() {
-    	try { 
-	        if (id != null) {
-	            if (id == 0) {
-	                persona = new Persona();
-	            }else {
-	            	persona = personaServicio.encontrarPersonaPorId(id);
-	            }	            
-	        }
-	        
-		} catch (Exception e) {
-			notificationError(e);
-			e.printStackTrace();
-		    
-		}
-    }
+//    public void cargarPersona() {
+//    	try { 
+//	        if (id != null) {
+//	            if (id == 0) {
+//	                persona = new Persona();
+//	            }else {
+//	            	persona = personaServicio.encontrarPersonaPorId(id);
+//	            }	            
+//	        }
+//	        
+//		} catch (Exception e) {
+//			notificationError(e);
+//			e.printStackTrace();
+//		    
+//		}
+//    }
 
     public Persona getPersona() {
         return persona;
@@ -122,13 +125,13 @@ public class PersonaBean  implements Serializable{
         this.persona = persona;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
     
     public Integer getOperacion() {
 		return operacion;
@@ -186,47 +189,42 @@ public class PersonaBean  implements Serializable{
 		}	
 	}
 	
-    public String editarPersonaContato(PersonaContacto personaContactoSeleccionada){
-    	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("personaContactoSeleccionada", personaContactoSeleccionada);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
+    public String editarPersonaContato(Entidad detalle, String nombreDetalle){
+    	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("detalle", detalle);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("maestro", persona);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.MODIFICAR.ordinal());
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacionMaestro", operacion);
         
-        return "/persona/personacontacto/personacontacto?faces-redirect=true";    	
+        return "/persona/"+nombreDetalle+"/personacontacto?faces-redirect=true";    	
 
     }
 
-    public String crearPersonaContacto(){    	
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
+    public String crearPersonaContacto(String nombreDetalle){    	
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("maestro", persona);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.INSERTAR.ordinal());
-    	return "/persona/personacontacto/personacontacto?faces-redirect=true";
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacionMaestro", operacion);
+        return "/persona/"+nombreDetalle+"/personacontacto?faces-redirect=true";
     }
 
-    public String consultarPersonaContato(PersonaContacto personaContactoSeleccionada){
-    	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("personaContactoSeleccionada", personaContactoSeleccionada);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
+    public String consultarPersonaContato(Entidad detalle, String nombreDetalle){
+    	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("detalle", detalle);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("maestro", persona);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.CONSULTAR.ordinal());
-    	return "/persona/personacontacto/personacontacto?faces-redirect=true";
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacionMaestro", operacion);
+        return "/persona/"+nombreDetalle+"/personacontacto?faces-redirect=true";
 
     }
     
-    public void eliminarPersonaContacto(PersonaContacto personaContactoSeleccionada){
- 
-    	personaContactoSeleccionada.setPersona(persona);
-    	persona.getContactos().remove(personaContactoSeleccionada);
-    	personaContactoSeleccionada.setPersona(null);    	
-    	notificationSuccess("Registro eliminado con exito");
-    	
-    }
+//    public void eliminarPersonaContacto(PersonaContacto personaContactoSeleccionada){
+// 
+//    	personaContactoSeleccionada.setPersona(persona);
+//    	persona.getContactos().remove(personaContactoSeleccionada);
+//    	personaContactoSeleccionada.setPersona(null);    	
+//    	notificationSuccess("Registro eliminado con exito");
+//    	
+//    }
 
 
-	public PersonaContacto getPersonaContactoSeleccionada() {
-		return personaContactoSeleccionada;
-	}
-
-
-	public void setPersonaContactoSeleccionada(PersonaContacto personaContactoSeleccionada) {
-		this.personaContactoSeleccionada = personaContactoSeleccionada;
-	}
 
 
 }

@@ -105,16 +105,24 @@ public class PersonaListaBean implements Serializable{
 	    }
 	    
 
-	    public String editar(Persona personaSeleccionada){        
-		       return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getId()+"&operacion="+ Operacion.MODIFICAR.ordinal();
+	    public String editar(Persona personaSeleccionada){
+	        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", personaSeleccionada);
+	        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.MODIFICAR.ordinal());
+	        return "/persona/persona?faces-redirect=true";
+		    //  return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getId()+"&operacion="+ Operacion.MODIFICAR.ordinal();
 	    }
 
 	    public String crear(){        
-		       return "/persona/persona?faces-redirect=true&id=0&operacion=" + Operacion.INSERTAR.ordinal();
+	    		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.INSERTAR.ordinal());
+	    		return "/persona/persona?faces-redirect=true";
+	    		//return "/persona/persona?faces-redirect=true&id=0&operacion=" + Operacion.INSERTAR.ordinal();
 	    }
 
-	    public String consultar(Persona personaSeleccionada){        
-	    	return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getId()+"&operacion="+ Operacion.CONSULTAR.ordinal();
+	    public String consultar(Persona personaSeleccionada){
+	        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", personaSeleccionada);
+	        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.CONSULTAR.ordinal());
+	    	return "/persona/persona?faces-redirect=true";
+//	    	return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getId()+"&operacion="+ Operacion.CONSULTAR.ordinal();
 	    }
 	    
 	    public String inicio(){        
@@ -126,12 +134,10 @@ public class PersonaListaBean implements Serializable{
 	    	try { 
 	    		this.personaServicio.eliminarPersona(personaSeleccionada);
 	    		cargarLista();
-	    		notificationSuccess("Registro eliminado con exito");
-	    		//return "/persona/personas?faces-redirect=true";
+	    		notificationSuccess("Registro eliminado con exito");	    		
 			} catch (Exception e) {
 				notificationError(e);
-				e.printStackTrace();
-				//return "/persona/personas?faces-redirect=true";
+				e.printStackTrace();				
 			}
 	    }
 	    
