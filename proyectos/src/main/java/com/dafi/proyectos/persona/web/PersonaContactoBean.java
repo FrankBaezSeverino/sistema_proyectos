@@ -26,6 +26,8 @@ public class PersonaContactoBean implements Serializable{
     private Persona persona;
     private Integer operacion ;
     private Integer operacionMaestro ;
+    private Integer tabIndexMaestro;
+    private Integer tabIndex=0;
     
     @PostConstruct
     public void init() {
@@ -33,6 +35,7 @@ public class PersonaContactoBean implements Serializable{
         personaContacto = (PersonaContacto) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("detalle");
         operacion = (Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("operacion");
         operacionMaestro = (Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("operacionMaestro");
+        tabIndexMaestro=(Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("tabIndexMaestro");
         if (personaContacto == null) {
         	personaContacto = new PersonaContacto();
       //  	isNuevo = true;
@@ -42,15 +45,16 @@ public class PersonaContactoBean implements Serializable{
     }
     
     
-    public void grabar() {
+    public String grabar() {
         if (operacion==Operacion.INSERTAR.ordinal()) {
         	personaContacto.setPersona(persona);
         	persona.getContactos().add(personaContacto);
         	notificationSuccess( "Registro confirmado");
         }
-//        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
-//        
-//        return "/persona/persona?faces-redirect=true";
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", operacionMaestro);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("tabIndex", tabIndexMaestro);
+		return "/persona/persona?faces-redirect=true";
     }
 
 	
@@ -59,6 +63,7 @@ public class PersonaContactoBean implements Serializable{
         	personaContacto.setPersona(persona);
         	persona.getContactos().remove(personaContacto);
         	personaContacto.setPersona(null);
+        	operacion=Operacion.CONSULTAR.ordinal();
     		notificationSuccess("Registro eliminado con exito");    		
 		} catch (Exception e) {
 			notificationError(e);
@@ -72,19 +77,16 @@ public class PersonaContactoBean implements Serializable{
 
 	}
 	
-	public String retornar() {	
+	public String retornar() {
+			cancelar();	
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", operacionMaestro);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("tabIndex", tabIndexMaestro);
 			return "/persona/persona?faces-redirect=true";
 	}
 	
     
-    public String crear(){        
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", persona);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.INSERTAR.ordinal());
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacionMaestro", operacionMaestro);
-    	return "/persona/personacontacto/personacontacto?faces-redirect=true";
-    }
+
     
     public PersonaContacto getPersonaContacto() {
 		return personaContacto;

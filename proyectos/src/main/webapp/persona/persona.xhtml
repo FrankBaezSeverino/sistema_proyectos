@@ -20,19 +20,51 @@
         </p:ajaxStatus>  
        
         <h:form id ="form" >
-            <p:growl id="messages" showDetail="false" life="10000" style="text-align: center"/>                       	           	  
-              <p:outputPanel id="personaDetail" style="text-align: center" >
-              		<h:inputHidden id="id" value="#{personaBean.persona.id}"/>
-                    <p:panelGrid id="display" columns="6" columnClasses="label, value"  >
-                      	 <f:facet name="header" >
-  						 	Registro de Personas
-            			</f:facet>
-            			 <p:tabView> 
-            			 	<p:tab title="Datos Generales">           			
+          <p:outputPanel id="botones" style="text-align: left" >
+            <p:commandButton 	value="Retornar" 
+								action="#{personaBean.retornar()}" 
+								ajax="false"  immediate="true"								  
+								icon="fa fa-arrow-circle-left" title="Retornar"/>
+							
+			 <p:commandButton 	value="Crear" 
+						      	action="#{personaBean.crear()}" 
+			   				  	ajax="false"  immediate="true" 
+						    	icon="fa fa-file" title="Crear"/>
+            
+            
+            <p:commandButton 	value="Cancelar" action="#{personaBean.cancelar()}" 
+                        		immediate="true" ajax="true"   
+                        		icon="fa fa-ban" title="Cancelar" 
+                        		update=":form:messages,:form:personaDetail,:form:botones"
+                        		disabled="#{personaBean.isDesahabilitarBotonCancelar()}">
+                				<p:resetInput target="personaDetail" />
+           	</p:commandButton>				
+      
+   			<p:commandButton	value="Eliminar" 
+   							 	update=":form:messages,:form:personaDetail,:form:botones" 
+   							 	oncomplete="PF('confirmDeleteDlg').show()"   													 
+   								ajax="true" immediate="true"   
+   								icon="fa fa-trash" title="Eliminar" 
+   								disabled="#{personaBean.isDesahabilitarBotonEliminar()}"/>         
+            				
+            <p:commandButton 	value="Grabar" 
+            					action="#{personaBean.grabarPersona()}" 
+            					ajax="true"   
+            					icon="fa fa-floppy-o" title="Grabar" 
+            					update=":form:messages,:form:personaDetail"
+            					disabled="#{personaBean.isDesahabilitarBotonGrabar()}" />
+           </p:outputPanel>
+            <p:growl id="messages" showDetail="false" life="10000" style="text-align: left"/>                       	           	  
+              <p:outputPanel id="personaDetail" style="text-align: left" >
+           		<h:inputHidden id="id" value="#{personaBean.persona.id}"/>
+       			 	<p:tabView activeIndex="#{personaBean.tabIndex}"  style="text-align: left"> 
+           			 	<p:tab title="Datos Generales" >           			
+	 	                    <p:panelGrid id="display" columns="4" columnClasses="label, value"  >
+            					
             					<p:outputLabel for="nombre" value="Name"/>
             					<p:inputText id="nombre" value="#{personaBean.persona.nombre}" required="true"
             			 		requiredMessage="Por favor entre su nombre." disabled="#{personaBean.isOperacionConsultar()}"/>
-            			 		<p:message for="nombre" />
+            			 		
                         			
             					<p:outputLabel for="correo" value="Correo"/>
             					<p:inputText id="correo" required="true"
@@ -42,41 +74,34 @@
             			  				<f:validateRegex
 										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 										</p:inputText>
-            					<p:message for="correo" />
+            					
             			
             					<p:outputLabel for="telefono" value="Telefono"/>
             					<p:inputMask id="telefono" value="#{personaBean.persona.telefono}"  mask="(999) 999-9999" disabled="#{personaBean.isOperacionConsultar()}"/>
-            					<p:message for="telefono" />
+            					
             			
             			
             			
             					<p:outputLabel for="fechaRegistro" value="Fecha Registro" />
         						<p:calendar id="fechaRegistro" value="#{personaBean.persona.fechaRegistro}" pattern="dd-MM-yyyy" mask="true" disabled="true"/>
-        						<p:message for="fechaRegistro" />
         						
- 						 	</p:tab>
- 							<p:tab title="Contactos">
+                   			</p:panelGrid>        						
+ 						</p:tab>
+ 						<p:tab title="Contactos">
 		 						<p:dataTable id="lista" value="#{personaBean.persona.contactos}" var="personaContacto"  
 			            			paginator="true"
 									rows="5"
 									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15"			            			 
 			            			border="1" 
-			            			paginatorPosition="bottom">
-					                <f:facet name="header">
-					                    Contactos
-					                </f:facet>
-					                
-					                <p:column headerText="Id">
-					                  	<h:outputText value="#{personaContacto.id}"/>
-					                </p:column>
-					                
-					                <p:column headerText="Nombre">                    
+			            			paginatorPosition="bottom" style="text-align: left">					                
+
+					                <p:column headerText="Nombre" width="85%">                    
 					                    <h:outputText value="#{personaContacto.nombre}"/>
 					                </p:column>
 		                
 		                
-					                <p:column>
+					                <p:column width="15%">
 					                    <f:facet name="header">Acciones</f:facet>
 					                
 					                    <p:commandButton   action="#{personaBean.editarPersonaContato(personaContacto)}"  icon="fa fa-pencil" title="Editar"/>        
@@ -91,48 +116,13 @@
 					                    <p:commandButton   action="#{personaBean.consultarPersonaContato(personaContacto)}"  icon="fa fa-eye"  title="Consultar"/>                    
 					                
 					                </p:column>
-					                <f:facet name="footer">
-					                   	<p:commandButton value="Crear" action="#{personaBean.crearPersonaContacto()}"  icon="fa fa-file" title="Crear"/>
+					                <f:facet name="footer" >
+					                   	<p:commandButton value="Crear" action="#{personaBean.crearPersonaContacto()}"  icon="fa fa-file" title="Crear" style="text-align: left"/>
 					                </f:facet>
 		
 		            			</p:dataTable>
  							</p:tab>   
- 						 </p:tabView>	           				
-        				<f:facet name="footer">
-							<p:commandButton 	value="Retornar" 
-												action="#{personaBean.retornar()}" 
-												ajax="false"  immediate="true" 
-												style="margin-right:5px;"  
-												icon="fa fa-arrow-circle-left" title="Retornar"/>
-							
-						    <p:commandButton value="Crear" 
-						    				action="#{personaBean.crear()}" 
-						    				ajax="false"  immediate="true" 
-						    				style="margin-right:5px;"  icon="fa fa-file" title="Crear"/>
-            
-            
-                        	<p:commandButton value="Cancelar" action="#{personaBean.cancelar()}" 
-                        					immediate="true" ajax="true" style="margin-right:5px;"  
-                        					icon="fa fa-ban" title="Cancelar" 
-                        					update=":form:messages,:form:personaDetail"
-                        					disabled="#{personaBean.isDesahabilitarBotonCancelar()}">
-                				<p:resetInput target="personaDetail" />
-            				</p:commandButton>				
-      
-   							<p:commandButton 		value="Eliminar" 
-   							 						update=":form:personaDetail" oncomplete="PF('confirmDeleteDlg').show()"   													 
-   													ajax="true" immediate="true" style="margin-right:5px;"  
-   													icon="fa fa-trash" title="Eliminar" 
-   													disabled="#{personaBean.isDesahabilitarBotonEliminar()}"/>         
-            				
-            				<p:commandButton 	value="Grabar" 
-            									action="#{personaBean.grabarPersona()}" 
-            									ajax="true" style="margin-right:5px;"  
-            									icon="fa fa-floppy-o" title="Grabar" 
-            									update=":form:messages,:form:personaDetail"
-            									disabled="#{personaBean.isDesahabilitarBotonGrabar()}" />
-            			</f:facet>
-                   	</p:panelGrid>
+ 						 </p:tabView>	 
           	</p:outputPanel>
           	
           	
@@ -150,7 +140,7 @@
 							
 
 						<p:commandButton value="Si"
-							update=":form:messages,:form:personaDetail"
+							update=":form:messages,:form:personaDetail,:form:botones"
 							action="#{personaBean.eliminarPersona()}"
 							oncomplete="PF('confirmDeleteDlg').hide()" />
 						<p:commandButton value="No" onclick="PF('confirmDeleteDlg').hide()"	type="button" />

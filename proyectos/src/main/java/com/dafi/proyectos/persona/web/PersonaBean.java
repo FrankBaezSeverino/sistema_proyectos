@@ -9,7 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.io.EndianUtils;
+
 import org.primefaces.PrimeFaces;
 
 import com.dafi.proyectos.persona.modelo.Persona;
@@ -35,7 +35,9 @@ public class PersonaBean  implements Serializable{
     
     private Persona persona;   
 
-	private Integer operacion ;    
+	private Integer operacion ;
+	
+	private Integer tabIndex=0;
     
     public PersonaBean() {
 	}
@@ -45,6 +47,7 @@ public class PersonaBean  implements Serializable{
     public void inicializar(){   
         persona = (Persona) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("persona");       
         operacion = (Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("operacion");
+        tabIndex= (Integer) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("tabIndex");
     	if (persona==null) {
     		persona = new Persona();
     	}
@@ -189,42 +192,53 @@ public class PersonaBean  implements Serializable{
 		}	
 	}
 	
-    public String editarPersonaContato(Entidad detalle, String nombreDetalle){
+    public String editarPersonaContato(Entidad detalle){
     	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("detalle", detalle);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("maestro", persona);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.MODIFICAR.ordinal());
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacionMaestro", operacion);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("tabIndexMaestro", tabIndex);
         
-        return "/persona/"+nombreDetalle+"/personacontacto?faces-redirect=true";    	
+    	return "/persona/personacontacto/personacontacto?faces-redirect=true";   	
 
     }
 
-    public String crearPersonaContacto(String nombreDetalle){    	
+    public String crearPersonaContacto(){    	
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("maestro", persona);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.INSERTAR.ordinal());
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacionMaestro", operacion);
-        return "/persona/"+nombreDetalle+"/personacontacto?faces-redirect=true";
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("tabIndexMaestro", tabIndex);
+    	return "/persona/personacontacto/personacontacto?faces-redirect=true";
     }
 
-    public String consultarPersonaContato(Entidad detalle, String nombreDetalle){
+    public String consultarPersonaContato(Entidad detalle){
     	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("detalle", detalle);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("maestro", persona);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.CONSULTAR.ordinal());
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacionMaestro", operacion);
-        return "/persona/"+nombreDetalle+"/personacontacto?faces-redirect=true";
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("tabIndexMaestro", tabIndex);
+    	return "/persona/personacontacto/personacontacto?faces-redirect=true";
 
     }
     
-//    public void eliminarPersonaContacto(PersonaContacto personaContactoSeleccionada){
-// 
-//    	personaContactoSeleccionada.setPersona(persona);
-//    	persona.getContactos().remove(personaContactoSeleccionada);
-//    	personaContactoSeleccionada.setPersona(null);    	
-//    	notificationSuccess("Registro eliminado con exito");
-//    	
-//    }
+    public void eliminarPersonaContacto(PersonaContacto personaContactoSeleccionada){
+ 
+    	personaContactoSeleccionada.setPersona(persona);
+    	persona.getContactos().remove(personaContactoSeleccionada);
+    	personaContactoSeleccionada.setPersona(null);    	
+    	notificationSuccess("Registro eliminado con exito");
+    	
+    }
 
 
+	public Integer getTabIndex() {
+		return tabIndex;
+	}
 
+
+	public void setTabIndex(Integer tabIndex) {
+		this.tabIndex = tabIndex;
+	}  
+    
 
 }
