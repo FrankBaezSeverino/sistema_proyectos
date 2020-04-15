@@ -108,19 +108,23 @@ public class PersonaListaBean implements Serializable{
 	    public String editar(Persona personaSeleccionada){
 	        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", personaSeleccionada);
 	        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.MODIFICAR.ordinal());
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("tabIndex", 0);
 	        return "/persona/persona?faces-redirect=true";
 		    //  return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getId()+"&operacion="+ Operacion.MODIFICAR.ordinal();
 	    }
 
-	    public String crear(){        
-	    		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.INSERTAR.ordinal());
-	    		return "/persona/persona?faces-redirect=true";
+	    public String crear(){
+	    	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", null);
+	    	FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.INSERTAR.ordinal());
+		    FacesContext.getCurrentInstance().getExternalContext().getFlash().put("tabIndex", 0);
+    		return "/persona/persona?faces-redirect=true";
 	    		//return "/persona/persona?faces-redirect=true&id=0&operacion=" + Operacion.INSERTAR.ordinal();
 	    }
 
 	    public String consultar(Persona personaSeleccionada){
 	        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("persona", personaSeleccionada);
 	        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("operacion", Operacion.CONSULTAR.ordinal());
+	        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("tabIndex", 0);
 	    	return "/persona/persona?faces-redirect=true";
 //	    	return "/persona/persona?faces-redirect=true&id="+ personaSeleccionada.getId()+"&operacion="+ Operacion.CONSULTAR.ordinal();
 	    }

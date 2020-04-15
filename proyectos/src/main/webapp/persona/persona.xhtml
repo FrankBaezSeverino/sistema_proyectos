@@ -116,11 +116,15 @@
 					                    <p:commandButton   action="#{personaBean.consultarPersonaContato(personaContacto)}"  icon="fa fa-eye"  title="Consultar"/>                    
 					                
 					                </p:column>
-					                <f:facet name="footer" >
-					                   	<p:commandButton value="Crear" action="#{personaBean.crearPersonaContacto()}"  icon="fa fa-file" title="Crear" style="text-align: left"/>
-					                </f:facet>
+					                			
+					                
 		
 		            			</p:dataTable>
+		            			<p:commandButton 	value="Crear" 
+					                   						action="#{personaBean.crearPersonaContacto()}"  
+					                   						icon="fa fa-file" 
+					                   						title="Crear" 
+					                   						style="text-align: right"/>
  							</p:tab>   
  						 </p:tabView>	 
           	</p:outputPanel>

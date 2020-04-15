@@ -1,6 +1,7 @@
 package com.dafi.proyectos.persona.web;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -48,6 +49,9 @@ public class PersonaContactoBean implements Serializable{
     public String grabar() {
         if (operacion==Operacion.INSERTAR.ordinal()) {
         	personaContacto.setPersona(persona);
+        	if (persona.getContactos()==null) {
+        		persona.setContactos(new ArrayList<PersonaContacto>());
+        	}
         	persona.getContactos().add(personaContacto);
         	notificationSuccess( "Registro confirmado");
         }

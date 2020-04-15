@@ -7,9 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
-import com.dafi.proyectos.persona.regla.calculo.ReglaCalculoActualizaFechaRegistro;
-import com.dafi.proyectos.persona.regla.valicion.ReglaValidaUnicoCorreoPorPersona;
-import com.dafi.proyectos.proyecto.modelo.ImpedimentoProyecto;
+
 import com.dafi.proyectos.util.negocio.modelo.Entidad;
 
 
