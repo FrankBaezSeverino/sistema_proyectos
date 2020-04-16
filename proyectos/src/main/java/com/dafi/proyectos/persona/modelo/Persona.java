@@ -5,9 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 
-
+import com.dafi.proyectos.prueba.modelo.Prueba;
 import com.dafi.proyectos.util.negocio.modelo.Entidad;
 
 
@@ -49,6 +50,10 @@ public class Persona implements Serializable, Entidad {
         
     @Column(name = "TELEFONO", nullable = true,length = 30)
     private String telefono;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "ID_PRUEBA", nullable = false)
+    private Prueba prueba;
     
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
@@ -133,6 +138,14 @@ public class Persona implements Serializable, Entidad {
 
 	public void setContactos(List<PersonaContacto> contactos) {
 		this.contactos = contactos;
+	}
+
+	public Prueba getPrueba() {
+		return prueba;
+	}
+
+	public void setPrueba(Prueba prueba) {
+		this.prueba = prueba;
 	}    
 
 	

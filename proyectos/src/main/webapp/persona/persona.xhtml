@@ -85,6 +85,12 @@
             					<p:outputLabel for="fechaRegistro" value="Fecha Registro" />
         						<p:calendar id="fechaRegistro" value="#{personaBean.persona.fechaRegistro}" pattern="dd-MM-yyyy" mask="true" disabled="true"/>
         						
+        						<p:outputLabel for="prueba" value="Prueba"/>            
+            					<p:selectOneMenu id="prueba" value="#{personaBean.persona.prueba}" converter="#{pru}">
+                					<f:selectItem itemLabel="Elija una prueba" noSelectionOption="true"/>
+                					<f:selectItems value="#{categoryListPresenter.categories}" var="pru" itemLabel="#{pru.descripcionEntidad}" itemValue="#{pru}"/>
+            					</p:selectOneMenu>
+        						
                    			</p:panelGrid>        						
  						</p:tab>
  						<p:tab title="Contactos">
